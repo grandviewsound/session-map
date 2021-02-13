@@ -685,7 +685,7 @@
         <scene sceneID="R2V-B0-nI4">
             <objects>
                 <windowController id="B8D-0N-5wS" sceneMemberID="viewController">
-                    <window key="window" title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="IQv-IB-iLA">
+                    <window key="window" title="Session Map" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="IQv-IB-iLA">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="196" y="240" width="480" height="270"/>
@@ -710,33 +710,75 @@
                         <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NdG-7H-aP9">
-                                <rect key="frame" x="14" y="222" width="103" height="32"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="push" title="Run Script" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="luR-wC-LFF">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="runAppleScript:" target="XfG-lQ-9wD" id="pzx-Bf-52j"/>
-                                </connections>
-                            </button>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Iba-RP-2JF">
-                                <rect key="frame" x="20" y="205" width="442" height="16"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" lineBreakMode="clipping" title="Current Track: " id="vPn-ss-NQS">
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="Iba-RP-2JF">
+                                <rect key="frame" x="110" y="210" width="345" height="16"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" id="vPn-ss-NQS">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
+                                <accessibility description="Current Track" identifier="Current Track"/>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Z5X-pI-3wG">
+                                <rect key="frame" x="18" y="210" width="95" height="16"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="Current Track: " id="uII-E2-et4">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                                <accessibility description="Current Track" identifier="Current Track"/>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wxx-Wh-iYE">
+                                <rect key="frame" x="18" y="234" width="47" height="16"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="Status:" id="ngv-Ty-Qfw">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                                <accessibility description="Current Track" identifier="Current Track"/>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="733-3s-GZ6">
+                                <rect key="frame" x="69" y="234" width="386" height="16"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" id="dSc-xV-8ty">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                                <accessibility description="Current Track" identifier="Current Track"/>
                             </textField>
                         </subviews>
+                        <constraints>
+                            <constraint firstItem="Z5X-pI-3wG" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="20" symbolic="YES" id="0PV-ja-YIu"/>
+                            <constraint firstItem="733-3s-GZ6" firstAttribute="leading" secondItem="wxx-Wh-iYE" secondAttribute="trailing" constant="8" symbolic="YES" id="RBC-dO-8xA"/>
+                            <constraint firstAttribute="trailing" secondItem="733-3s-GZ6" secondAttribute="trailing" constant="27" id="Uwl-yD-v2v"/>
+                            <constraint firstItem="Iba-RP-2JF" firstAttribute="top" secondItem="733-3s-GZ6" secondAttribute="bottom" constant="8" symbolic="YES" id="ggA-oM-Fpa"/>
+                            <constraint firstItem="wxx-Wh-iYE" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="20" symbolic="YES" id="ibB-gG-Llh"/>
+                            <constraint firstItem="wxx-Wh-iYE" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="20" symbolic="YES" id="ky7-kW-nIB"/>
+                            <constraint firstItem="Iba-RP-2JF" firstAttribute="leading" secondItem="Z5X-pI-3wG" secondAttribute="trailing" constant="1" id="n7D-KH-Knd"/>
+                            <constraint firstAttribute="trailing" secondItem="Iba-RP-2JF" secondAttribute="trailing" constant="27" id="nME-3h-UHS"/>
+                            <constraint firstItem="Iba-RP-2JF" firstAttribute="leading" secondItem="Z5X-pI-3wG" secondAttribute="trailing" constant="1" id="r3n-sg-gFQ"/>
+                            <constraint firstItem="733-3s-GZ6" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="20" symbolic="YES" id="sdl-jo-Q2n"/>
+                            <constraint firstItem="Z5X-pI-3wG" firstAttribute="top" secondItem="wxx-Wh-iYE" secondAttribute="bottom" constant="8" symbolic="YES" id="vuF-b3-eWe"/>
+                        </constraints>
                     </view>
                     <connections>
                         <outlet property="currentTrackLabel" destination="Iba-RP-2JF" id="0He-mI-kMf"/>
+                        <outlet property="statusLabel" destination="733-3s-GZ6" id="Vrw-Un-QZl"/>
                     </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="5fi-we-HQO">
+                    <rect key="frame" x="0.0" y="0.0" width="386" height="16"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" lineBreakMode="clipping" id="nzQ-OC-BZy">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                    <accessibility description="Current Track" identifier="Current Track"/>
+                </textField>
             </objects>
             <point key="canvasLocation" x="75" y="655"/>
         </scene>
