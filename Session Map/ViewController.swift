@@ -12,9 +12,13 @@ class ViewController: NSViewController {
 
     @IBOutlet weak var currentTrackLabel: NSTextField!
     @IBOutlet weak var statusLabel: NSTextField!
+    @IBOutlet weak var refreshRateLabel: NSTextField!
+    @IBOutlet weak var refreshRateSlider: NSSlider!
     
     var currentTrackTitle = ""
     var proToolsStatus = false
+    var refreshRate = 1.0
+    var runLoopTimer: Timer?
     var checkProToolsStatusScript = ""
     var identifyCurrentTrackScript = ""
     
@@ -23,7 +27,11 @@ class ViewController: NSViewController {
     
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
+        
+        self.refreshRateSlider.doubleValue = self.refreshRate
+        self.refreshRateLabel.stringValue = String(format: "%.2f", self.refreshRate)
         
         // AppleScriptObjC setup
         Bundle.main.loadAppleScriptObjectiveCScripts()
@@ -33,8 +41,7 @@ class ViewController: NSViewController {
         
         self.setupScripts()
         
-        let timer = Timer(timeInterval: 0.5, target: self, selector: #selector(backgroundLoop), userInfo: nil, repeats: true)
-        RunLoop.current.add(timer, forMode: .common)
+        self.setTimer(interval: self.refreshRate)
         
     }
 
@@ -85,7 +92,13 @@ class ViewController: NSViewController {
         """
     }
 
-    
+    func setTimer(interval: Double) {
+        self.runLoopTimer = Timer(timeInterval: interval, target: self, selector: #selector(backgroundLoop), userInfo: nil, repeats: true)
+        if let timer = self.runLoopTimer {
+            timer.tolerance = 0.1
+            RunLoop.current.add(timer, forMode: .common)
+        }
+    }
     
     @objc func backgroundLoop() {
         
@@ -131,7 +144,7 @@ class ViewController: NSViewController {
                                 }
                             }
                         } else if (error != nil) {
-                            print("error: ", error!)
+                            //print("error: ", error!)
                         }
                     }
                 } else {
@@ -144,6 +157,26 @@ class ViewController: NSViewController {
             
         }
         
+    }
+
+    
+    @IBAction func refreshRateChanged(_ sender: Any) {
+        self.refreshRate = self.refreshRateSlider.doubleValue
+        self.refreshRateLabel.stringValue = String(format: "%.2f", self.refreshRate)
+    }
+    
+    @IBAction func updateTimer(_ sender: Any) {
+        if let timer = self.runLoopTimer {
+            timer.invalidate()
+            self.setTimer(interval: self.refreshRate)
+        }
+    }
+    
+    @IBAction func stopTimer(_ sender: Any) {
+        if let timer = self.runLoopTimer {
+            timer.invalidate()
+            self.statusLabel.stringValue = "Stopped"
+        }
     }
     
     

@@ -748,23 +748,85 @@
                                 </textFieldCell>
                                 <accessibility description="Current Track" identifier="Current Track"/>
                             </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3fq-iP-LUy">
+                                <rect key="frame" x="18" y="186" width="86" height="16"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="Refresh Rate:" id="OW9-Jh-vxR">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                                <accessibility description="Current Track" identifier="Current Track"/>
+                            </textField>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tbO-oo-Bau">
+                                <rect key="frame" x="135" y="176" width="145" height="32"/>
+                                <buttonCell key="cell" type="push" title="Update Run Loop" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="BNb-hq-Qrk">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="updateTimer:" target="XfG-lQ-9wD" id="9PD-Fx-uZ8"/>
+                                </connections>
+                            </button>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="RlU-tg-6rb">
+                                <rect key="frame" x="98" y="186" width="37" height="16"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="33" id="eSs-c7-yzu"/>
+                                </constraints>
+                                <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" id="Cqt-bf-WNK">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                                <accessibility description="Current Track" identifier="Current Track"/>
+                            </textField>
+                            <button horizontalHuggingPriority="249" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="AJX-Dy-1o2">
+                                <rect key="frame" x="280" y="176" width="179" height="32"/>
+                                <buttonCell key="cell" type="push" title="Stop Run Loop" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Kqn-39-oUG">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="stopTimer:" target="XfG-lQ-9wD" id="Wam-hz-yg1"/>
+                                </connections>
+                            </button>
+                            <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="YLb-qi-NCW">
+                                <rect key="frame" x="18" y="159" width="437" height="19"/>
+                                <sliderCell key="cell" continuous="YES" state="on" alignment="left" minValue="0.25" maxValue="3" doubleValue="1" tickMarkPosition="above" sliderType="linear" id="hWf-hq-Z8M"/>
+                                <connections>
+                                    <action selector="refreshRateChanged:" target="XfG-lQ-9wD" id="r27-LO-zBQ"/>
+                                </connections>
+                            </slider>
                         </subviews>
                         <constraints>
                             <constraint firstItem="Z5X-pI-3wG" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="20" symbolic="YES" id="0PV-ja-YIu"/>
+                            <constraint firstAttribute="trailing" secondItem="YLb-qi-NCW" secondAttribute="trailing" constant="27" id="4Yl-c2-7QZ"/>
+                            <constraint firstItem="tbO-oo-Bau" firstAttribute="leading" secondItem="RlU-tg-6rb" secondAttribute="trailing" constant="8" symbolic="YES" id="7YG-kM-xRp"/>
+                            <constraint firstItem="3fq-iP-LUy" firstAttribute="top" secondItem="Z5X-pI-3wG" secondAttribute="bottom" constant="8" symbolic="YES" id="A17-Nt-MLn"/>
+                            <constraint firstItem="AJX-Dy-1o2" firstAttribute="trailing" secondItem="Iba-RP-2JF" secondAttribute="trailing" id="MO4-qZ-nEz"/>
+                            <constraint firstItem="tbO-oo-Bau" firstAttribute="leading" secondItem="3fq-iP-LUy" secondAttribute="trailing" constant="39" id="OZY-cz-BP6"/>
                             <constraint firstItem="733-3s-GZ6" firstAttribute="leading" secondItem="wxx-Wh-iYE" secondAttribute="trailing" constant="8" symbolic="YES" id="RBC-dO-8xA"/>
+                            <constraint firstItem="3fq-iP-LUy" firstAttribute="baseline" secondItem="AJX-Dy-1o2" secondAttribute="baseline" id="RZ1-j8-AB3"/>
+                            <constraint firstItem="AJX-Dy-1o2" firstAttribute="leading" secondItem="tbO-oo-Bau" secondAttribute="trailing" constant="12" symbolic="YES" id="Sg3-dn-LpO"/>
                             <constraint firstAttribute="trailing" secondItem="733-3s-GZ6" secondAttribute="trailing" constant="27" id="Uwl-yD-v2v"/>
+                            <constraint firstItem="YLb-qi-NCW" firstAttribute="top" secondItem="3fq-iP-LUy" secondAttribute="bottom" constant="10" id="bVg-ky-NJn"/>
+                            <constraint firstItem="3fq-iP-LUy" firstAttribute="baseline" secondItem="RlU-tg-6rb" secondAttribute="baseline" id="dLD-Ti-Yye"/>
+                            <constraint firstItem="3fq-iP-LUy" firstAttribute="baseline" secondItem="tbO-oo-Bau" secondAttribute="baseline" id="gal-Qc-elM"/>
                             <constraint firstItem="Iba-RP-2JF" firstAttribute="top" secondItem="733-3s-GZ6" secondAttribute="bottom" constant="8" symbolic="YES" id="ggA-oM-Fpa"/>
                             <constraint firstItem="wxx-Wh-iYE" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="20" symbolic="YES" id="ibB-gG-Llh"/>
                             <constraint firstItem="wxx-Wh-iYE" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="20" symbolic="YES" id="ky7-kW-nIB"/>
+                            <constraint firstItem="YLb-qi-NCW" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="20" symbolic="YES" id="lHk-cm-M3y"/>
                             <constraint firstItem="Iba-RP-2JF" firstAttribute="leading" secondItem="Z5X-pI-3wG" secondAttribute="trailing" constant="1" id="n7D-KH-Knd"/>
                             <constraint firstAttribute="trailing" secondItem="Iba-RP-2JF" secondAttribute="trailing" constant="27" id="nME-3h-UHS"/>
                             <constraint firstItem="Iba-RP-2JF" firstAttribute="leading" secondItem="Z5X-pI-3wG" secondAttribute="trailing" constant="1" id="r3n-sg-gFQ"/>
                             <constraint firstItem="733-3s-GZ6" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="20" symbolic="YES" id="sdl-jo-Q2n"/>
                             <constraint firstItem="Z5X-pI-3wG" firstAttribute="top" secondItem="wxx-Wh-iYE" secondAttribute="bottom" constant="8" symbolic="YES" id="vuF-b3-eWe"/>
+                            <constraint firstItem="3fq-iP-LUy" firstAttribute="leading" secondItem="Z5X-pI-3wG" secondAttribute="leading" id="wyZ-Dm-sSf"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="currentTrackLabel" destination="Iba-RP-2JF" id="0He-mI-kMf"/>
+                        <outlet property="refreshRateLabel" destination="RlU-tg-6rb" id="k2k-8K-Ox2"/>
+                        <outlet property="refreshRateSlider" destination="YLb-qi-NCW" id="GcB-gl-7ZT"/>
                         <outlet property="statusLabel" destination="733-3s-GZ6" id="Vrw-Un-QZl"/>
                     </connections>
                 </viewController>
