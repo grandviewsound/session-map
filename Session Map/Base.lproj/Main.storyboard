@@ -789,6 +789,26 @@
                                     <action selector="stopTimer:" target="XfG-lQ-9wD" id="Wam-hz-yg1"/>
                                 </connections>
                             </button>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0nL-Dq-UAp">
+                                <rect key="frame" x="18" y="137" width="77" height="16"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="CPU Usage:" id="JbO-8n-3SO">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                                <accessibility description="Current Track" identifier="Current Track"/>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tKk-D2-JgC">
+                                <rect key="frame" x="99" y="137" width="66" height="16"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="0.0%" id="U4o-uw-8Jj">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                                <accessibility description="Current Track" identifier="Current Track"/>
+                            </textField>
                             <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="YLb-qi-NCW">
                                 <rect key="frame" x="18" y="159" width="437" height="19"/>
                                 <sliderCell key="cell" continuous="YES" state="on" alignment="left" minValue="0.25" maxValue="3" doubleValue="1" tickMarkPosition="above" sliderType="linear" id="hWf-hq-Z8M"/>
@@ -824,6 +844,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="cpuUsageLabel" destination="tKk-D2-JgC" id="H22-2N-h0W"/>
                         <outlet property="currentTrackLabel" destination="Iba-RP-2JF" id="0He-mI-kMf"/>
                         <outlet property="refreshRateLabel" destination="RlU-tg-6rb" id="k2k-8K-Ox2"/>
                         <outlet property="refreshRateSlider" destination="YLb-qi-NCW" id="GcB-gl-7ZT"/>

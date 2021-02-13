@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E300C97425D82A2B00171D05 /* CpuUsage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E300C97325D82A2A00171D05 /* CpuUsage.swift */; };
 		E3325E2E25D6C019004B8A39 /* ScriptBridge.applescript in Sources */ = {isa = PBXBuildFile; fileRef = E3325E2C25D6C019004B8A39 /* ScriptBridge.applescript */; };
 		E3325E2F25D6C019004B8A39 /* ScriptBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3325E2D25D6C019004B8A39 /* ScriptBridge.swift */; };
 		E3694CD225D6331600790E7D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3694CD125D6331600790E7D /* AppDelegate.swift */; };
@@ -17,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E300C97325D82A2A00171D05 /* CpuUsage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CpuUsage.swift; sourceTree = "<group>"; };
 		E3325E2C25D6C019004B8A39 /* ScriptBridge.applescript */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.applescript; path = ScriptBridge.applescript; sourceTree = "<group>"; };
 		E3325E2D25D6C019004B8A39 /* ScriptBridge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScriptBridge.swift; sourceTree = "<group>"; };
 		E3694CCE25D6331600790E7D /* Session Map.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Session Map.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -63,6 +65,7 @@
 			children = (
 				E3694CD125D6331600790E7D /* AppDelegate.swift */,
 				E3694CD325D6331600790E7D /* ViewController.swift */,
+				E300C97325D82A2A00171D05 /* CpuUsage.swift */,
 				E3325E2D25D6C019004B8A39 /* ScriptBridge.swift */,
 				E3325E2C25D6C019004B8A39 /* ScriptBridge.applescript */,
 				E3694CD525D6331700790E7D /* Assets.xcassets */,
@@ -153,6 +156,7 @@
 				E3325E2E25D6C019004B8A39 /* ScriptBridge.applescript in Sources */,
 				E3694CD425D6331600790E7D /* ViewController.swift in Sources */,
 				E3694CD225D6331600790E7D /* AppDelegate.swift in Sources */,
+				E300C97425D82A2B00171D05 /* CpuUsage.swift in Sources */,
 				E3325E2F25D6C019004B8A39 /* ScriptBridge.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
