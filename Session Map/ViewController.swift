@@ -15,6 +15,9 @@ class ViewController: NSViewController {
     @IBOutlet weak var refreshRateLabel: NSTextField!
     @IBOutlet weak var refreshRateSlider: NSSlider!
     @IBOutlet weak var cpuUsageLabel: NSTextField!
+    @IBOutlet weak var autoPanToggle: NSSwitch!
+    @IBOutlet weak var runLoopButton: NSButton!
+    @IBOutlet weak var accessibilityStatusLabel: NSTextField!
     
     var currentTrackTitle = ""
     var proToolsStatus = false
@@ -22,8 +25,7 @@ class ViewController: NSViewController {
     var runLoopTimer: Timer?
     var checkProToolsStatusScript = ""
     var identifyCurrentTrackScript = ""
-    
-    //let cpuUsage = CpuUsage()
+    var accessibilityEnabled = false
     
     // AppleScriptObjC object for communicating with iTunes
     var scriptBridge: ScriptBridge?
@@ -37,12 +39,13 @@ class ViewController: NSViewController {
         self.refreshRateLabel.stringValue = String(format: "%.2f", self.refreshRate)
         
         // AppleScriptObjC setup
-        Bundle.main.loadAppleScriptObjectiveCScripts()
+        //Bundle.main.loadAppleScriptObjectiveCScripts()
         // create an instance of ScriptBridge script object for Swift code to use
-        let scriptBridgeClass: AnyClass = NSClassFromString("ScriptBridge")!
-        self.scriptBridge = scriptBridgeClass.alloc() as? ScriptBridge
+        //let scriptBridgeClass: AnyClass = NSClassFromString("ScriptBridge")!
+        //self.scriptBridge = scriptBridgeClass.alloc() as? ScriptBridge
         
         self.setupScripts()
+        self.checkAccessibilityStatus()
         
         self.setTimer(interval: self.refreshRate)
         
@@ -98,6 +101,18 @@ class ViewController: NSViewController {
 
         """
     }
+    
+    func checkAccessibilityStatus() {
+        let options: NSDictionary = [kAXTrustedCheckOptionPrompt.takeUnretainedValue() as String : true]
+        let accessEnabled = AXIsProcessTrustedWithOptions(options)
+        if !accessEnabled {
+            self.accessibilityStatusLabel.stringValue = "Access Not Enabled. Restart App"
+            self.accessibilityEnabled = false
+        } else {
+            self.accessibilityStatusLabel.stringValue = "Enabled"
+            self.accessibilityEnabled = true
+        }
+    }
 
     func setTimer(interval: Double) {
         self.runLoopTimer = Timer(timeInterval: interval, target: self, selector: #selector(backgroundLoop), userInfo: nil, repeats: true)
@@ -110,14 +125,8 @@ class ViewController: NSViewController {
     @objc func backgroundLoop() {
         
         DispatchQueue.global(qos: .background).async {
-            let options: NSDictionary = [kAXTrustedCheckOptionPrompt.takeUnretainedValue() as String : true]
-            let accessEnabled = AXIsProcessTrustedWithOptions(options)
             
-            if !accessEnabled {
-                
-                print("Access Not Enabled")
-                
-            } else {
+            if self.accessibilityEnabled {
                 
                 var error: NSDictionary?
                 
@@ -148,6 +157,9 @@ class ViewController: NSViewController {
                                 self.currentTrackTitle = scriptResult
                                 DispatchQueue.main.async {
                                     self.currentTrackLabel.stringValue = self.currentTrackTitle
+                                    if self.autoPanToggle.state.rawValue == 1 {
+                                        self.openPanWindow()
+                                    }
                                 }
                             }
                         } else if (error != nil) {
@@ -159,11 +171,8 @@ class ViewController: NSViewController {
                         self.statusLabel.stringValue = "Pro Tools Edit Window Is Not Open"
                     }
                 }
-                
             }
-            
         }
-        
     }
 
     
@@ -176,6 +185,7 @@ class ViewController: NSViewController {
         if let timer = self.runLoopTimer {
             timer.invalidate()
             self.setTimer(interval: self.refreshRate)
+            self.runLoopButton.title = "Update Run Loop"
         }
     }
     
@@ -183,11 +193,49 @@ class ViewController: NSViewController {
         if let timer = self.runLoopTimer {
             timer.invalidate()
             self.statusLabel.stringValue = "Stopped"
+            self.runLoopButton.title = "Start Run Loop"
         }
     }
     
     @objc func setCPULabel() {
         self.cpuUsageLabel.stringValue = String(format: "%.2f", self.cpuUsage()) + "%"
+        self.checkAccessibilityStatus()
+    }
+    
+    @IBAction func openPanButtonPressed(_ sender: Any) {
+        self.openPanWindow()
+    }
+    
+
+    func openPanWindow() {
+        DispatchQueue.global(qos: .background).async {
+            
+            if self.accessibilityEnabled {
+                
+                var error: NSDictionary?
+                
+                let script = """
+
+                tell application "System Events"
+                    tell process "Pro Tools"
+                        tell (1st window whose title contains "Edit: ")
+                            click button "Output Window button" of group "Audio IO" of group "\(self.currentTrackTitle)"
+                        end tell
+                    end tell
+                end tell
+
+                """
+                
+                // Checks if Pro Tools is running
+                if let scriptObject = NSAppleScript(source: script) {
+                    if let scriptResult = scriptObject.executeAndReturnError(&error).stringValue {
+                        print(scriptResult)
+                    } else if (error != nil) {
+                        print("error: ", error!)
+                    }
+                }
+            }
+        }
     }
     
     fileprivate func cpuUsage() -> Double {
