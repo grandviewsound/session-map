@@ -710,13 +710,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="502" height="270"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="Iba-RP-2JF">
+                            <textField identifier="Current Track" horizontalHuggingPriority="251" verticalHuggingPriority="750" id="Iba-RP-2JF">
                                 <rect key="frame" x="110" y="210" width="367" height="16"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" lineBreakMode="clipping" id="vPn-ss-NQS">
+                                <textFieldCell key="cell" lineBreakMode="clipping" identifier="Current Track" id="vPn-ss-NQS" userLabel="Current Track">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    <accessibility description="Current Track" identifier="Current Track"/>
                                 </textFieldCell>
                                 <accessibility description="Current Track" identifier="Current Track"/>
                             </textField>
@@ -727,7 +728,6 @@
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
-                                <accessibility description="Current Track" identifier="Current Track"/>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wxx-Wh-iYE">
                                 <rect key="frame" x="18" y="234" width="47" height="16"/>
@@ -736,7 +736,6 @@
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
-                                <accessibility description="Current Track" identifier="Current Track"/>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" ambiguous="YES" id="733-3s-GZ6">
                                 <rect key="frame" x="69" y="234" width="407" height="16"/>
@@ -746,16 +745,17 @@
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
-                                <accessibility description="Current Track" identifier="Current Track"/>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3fq-iP-LUy">
                                 <rect key="frame" x="18" y="186" width="126" height="16"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="122" id="fq6-UA-TiB"/>
+                                </constraints>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Refresh Rate (sec):" id="OW9-Jh-vxR">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
-                                <accessibility description="Current Track" identifier="Current Track"/>
                             </textField>
                             <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="YLb-qi-NCW">
                                 <rect key="frame" x="18" y="159" width="459" height="19"/>
@@ -764,20 +764,8 @@
                                     <action selector="refreshRateChanged:" target="XfG-lQ-9wD" id="r27-LO-zBQ"/>
                                 </connections>
                             </slider>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="RlU-tg-6rb">
-                                <rect key="frame" x="136" y="186" width="37" height="16"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="33" id="Ngx-9M-xkw"/>
-                                </constraints>
-                                <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" id="Cqt-bf-WNK">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                                <accessibility description="Current Track" identifier="Current Track"/>
-                            </textField>
                             <button horizontalHuggingPriority="249" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="AJX-Dy-1o2">
-                                <rect key="frame" x="336" y="176" width="145" height="32"/>
+                                <rect key="frame" x="344" y="176" width="137" height="32"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="125" id="BPc-Ji-xoY"/>
                                 </constraints>
@@ -796,7 +784,6 @@
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
-                                <accessibility description="Current Track" identifier="Current Track"/>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tKk-D2-JgC">
                                 <rect key="frame" x="99" y="137" width="66" height="16"/>
@@ -808,7 +795,6 @@
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
-                                <accessibility description="Current Track" identifier="Current Track"/>
                             </textField>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="bP8-a2-KEN">
                                 <rect key="frame" x="14" y="101" width="151" height="32"/>
@@ -839,7 +825,6 @@
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
-                                <accessibility description="Current Track" identifier="Current Track"/>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="MUo-5N-2mm">
                                 <rect key="frame" x="148" y="20" width="327" height="16"/>
@@ -849,7 +834,6 @@
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
-                                <accessibility description="Current Track" identifier="Current Track"/>
                             </textField>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tbO-oo-Bau">
                                 <rect key="frame" x="185" y="176" width="145" height="32"/>
@@ -864,23 +848,33 @@
                                     <action selector="updateTimer:" target="XfG-lQ-9wD" id="9PD-Fx-uZ8"/>
                                 </connections>
                             </button>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="RlU-tg-6rb">
+                                <rect key="frame" x="136" y="186" width="39" height="16"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="35" id="F4a-jz-RPt"/>
+                                </constraints>
+                                <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" id="Cqt-bf-WNK">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="RlU-tg-6rb" firstAttribute="baseline" secondItem="3fq-iP-LUy" secondAttribute="baseline" id="0LA-oG-fq0"/>
                             <constraint firstItem="Z5X-pI-3wG" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="20" symbolic="YES" id="0PV-ja-YIu"/>
+                            <constraint firstItem="AJX-Dy-1o2" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="tbO-oo-Bau" secondAttribute="trailing" id="1ra-uf-6e0"/>
+                            <constraint firstItem="AJX-Dy-1o2" firstAttribute="top" secondItem="Iba-RP-2JF" secondAttribute="bottom" constant="6" id="26X-O8-u4s"/>
                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="tKk-D2-JgC" secondAttribute="trailing" constant="20" symbolic="YES" id="2WV-hV-1hR"/>
-                            <constraint firstItem="tbO-oo-Bau" firstAttribute="baseline" secondItem="AJX-Dy-1o2" secondAttribute="baseline" id="30U-sr-jI1"/>
                             <constraint firstAttribute="trailing" secondItem="YLb-qi-NCW" secondAttribute="trailing" constant="27" id="4Yl-c2-7QZ"/>
                             <constraint firstAttribute="bottom" secondItem="4yc-go-SMv" secondAttribute="bottom" constant="78" id="6Kx-Ms-VHL"/>
                             <constraint firstItem="4yc-go-SMv" firstAttribute="centerY" secondItem="q81-iw-BMs" secondAttribute="centerY" id="7Mo-9m-883"/>
+                            <constraint firstItem="tbO-oo-Bau" firstAttribute="top" secondItem="Iba-RP-2JF" secondAttribute="bottom" constant="6" id="8FE-gk-Acn"/>
                             <constraint firstItem="bP8-a2-KEN" firstAttribute="top" secondItem="0nL-Dq-UAp" secondAttribute="bottom" constant="8" symbolic="YES" id="8um-Yg-XkA"/>
-                            <constraint firstItem="RlU-tg-6rb" firstAttribute="leading" secondItem="3fq-iP-LUy" secondAttribute="trailing" constant="2" id="AaC-jN-jfF"/>
-                            <constraint firstItem="tbO-oo-Bau" firstAttribute="baseline" secondItem="RlU-tg-6rb" secondAttribute="baseline" id="Bnp-zn-Wg0"/>
-                            <constraint firstItem="RlU-tg-6rb" firstAttribute="leading" secondItem="3fq-iP-LUy" secondAttribute="trailing" constant="-4" id="G6V-UP-lHE"/>
+                            <constraint firstItem="RlU-tg-6rb" firstAttribute="leading" secondItem="3fq-iP-LUy" secondAttribute="trailing" constant="-4" id="9Ue-sd-liP"/>
                             <constraint firstItem="bP8-a2-KEN" firstAttribute="leading" secondItem="q81-iw-BMs" secondAttribute="leading" id="HK3-0v-A6K"/>
+                            <constraint firstItem="tbO-oo-Bau" firstAttribute="leading" secondItem="3fq-iP-LUy" secondAttribute="trailing" constant="49" id="Jfw-wq-XM0"/>
                             <constraint firstItem="MUo-5N-2mm" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="KQH-3p-B9R" secondAttribute="trailing" constant="8" symbolic="YES" id="Jq3-aj-ab0"/>
                             <constraint firstItem="4yc-go-SMv" firstAttribute="top" secondItem="bP8-a2-KEN" secondAttribute="bottom" constant="14" id="KtO-qe-Yfi"/>
-                            <constraint firstItem="AJX-Dy-1o2" firstAttribute="leading" secondItem="tbO-oo-Bau" secondAttribute="trailing" constant="18" id="NMA-gR-S6h"/>
                             <constraint firstItem="bP8-a2-KEN" firstAttribute="leading" secondItem="YLb-qi-NCW" secondAttribute="leading" id="QzP-4s-34U"/>
                             <constraint firstItem="733-3s-GZ6" firstAttribute="leading" secondItem="wxx-Wh-iYE" secondAttribute="trailing" constant="8" symbolic="YES" id="RBC-dO-8xA"/>
                             <constraint firstItem="tbO-oo-Bau" firstAttribute="centerX" secondItem="YLb-qi-NCW" secondAttribute="centerX" constant="10" id="SfG-MJ-YgQ"/>
@@ -893,8 +887,10 @@
                             <constraint firstItem="bP8-a2-KEN" firstAttribute="leading" secondItem="0nL-Dq-UAp" secondAttribute="leading" id="c7C-ww-wwH"/>
                             <constraint firstItem="q81-iw-BMs" firstAttribute="top" secondItem="bP8-a2-KEN" secondAttribute="bottom" constant="12" id="cYR-m6-Hii"/>
                             <constraint firstItem="3fq-iP-LUy" firstAttribute="top" secondItem="Z5X-pI-3wG" secondAttribute="bottom" constant="8" symbolic="YES" id="cgu-8f-XrE"/>
+                            <constraint firstItem="RlU-tg-6rb" firstAttribute="top" secondItem="Iba-RP-2JF" secondAttribute="bottom" constant="8" symbolic="YES" id="d9Y-kN-NGL"/>
                             <constraint firstItem="Iba-RP-2JF" firstAttribute="top" secondItem="733-3s-GZ6" secondAttribute="bottom" constant="8" symbolic="YES" id="ggA-oM-Fpa"/>
                             <constraint firstItem="wxx-Wh-iYE" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="20" symbolic="YES" id="ibB-gG-Llh"/>
+                            <constraint firstAttribute="trailing" secondItem="AJX-Dy-1o2" secondAttribute="trailing" constant="27" id="kh8-mE-8BI"/>
                             <constraint firstItem="KQH-3p-B9R" firstAttribute="baseline" secondItem="MUo-5N-2mm" secondAttribute="baseline" id="koH-Rd-fQi"/>
                             <constraint firstAttribute="bottom" secondItem="bP8-a2-KEN" secondAttribute="bottom" constant="108" id="ktu-8r-R5c"/>
                             <constraint firstItem="wxx-Wh-iYE" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="20" symbolic="YES" id="ky7-kW-nIB"/>

@@ -35,6 +35,8 @@ class ViewController: NSViewController {
         
         super.viewDidLoad()
         
+        self.currentTrackLabel.setAccessibilityTitle("Current Track")
+        
         self.refreshRateSlider.doubleValue = self.refreshRate
         self.refreshRateLabel.stringValue = String(format: "%.2f", self.refreshRate)
         
@@ -49,7 +51,7 @@ class ViewController: NSViewController {
         
         self.setTimer(interval: self.refreshRate)
         
-        let cpuTimer = Timer(timeInterval: 2.0, target: self, selector: #selector(setCPULabel), userInfo: nil, repeats: true)
+        let cpuTimer = Timer(timeInterval: 4.0, target: self, selector: #selector(setCPULabel), userInfo: nil, repeats: true)
         cpuTimer.tolerance = 1.0
         RunLoop.current.add(cpuTimer, forMode: .common)
         
@@ -117,7 +119,7 @@ class ViewController: NSViewController {
     func setTimer(interval: Double) {
         self.runLoopTimer = Timer(timeInterval: interval, target: self, selector: #selector(backgroundLoop), userInfo: nil, repeats: true)
         if let timer = self.runLoopTimer {
-            timer.tolerance = 0.1
+            timer.tolerance = 0.3
             RunLoop.current.add(timer, forMode: .common)
         }
     }
