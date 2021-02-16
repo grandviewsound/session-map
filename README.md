@@ -1,6 +1,6 @@
 # Session Map
 
-![image](https://i.imgur.com/tEgrNN7.png)
+![Main Window](https://i.imgur.com/hEAzfPS.png)
 
 ### The Idea
 - A companion app for Pro Tools that fetches current UI status for various elements such as the currently selected track.  
@@ -12,7 +12,7 @@
 - Button for opening pan window of currently selected track
 - Switch to auto-open the pan which when the track selection changes.
 
-### Roadmap to v0.1
+### Roadmap to v0.2
 - [ ] Add scriptability to app, so it can be directly addressed by applescript, instead of going through System Events
 - [ ] Slots for tracks you'd like to save to directly address (mute, solo, inserts, sends, pan)
 - [ ] Plist support for basic persistence
