@@ -15,7 +15,7 @@ class ViewController: NSViewController {
     @IBOutlet weak var refreshRateLabel: NSTextField!
     @IBOutlet weak var refreshRateSlider: NSSlider!
     @IBOutlet weak var cpuUsageLabel: NSTextField!
-    @IBOutlet weak var autoPanToggle: NSSwitch!
+    @IBOutlet weak var autoPanToggle: NSButton!
     @IBOutlet weak var runLoopButton: NSButton!
     @IBOutlet weak var accessibilityStatusLabel: NSTextField!
     

@@ -810,18 +810,6 @@
                                     <action selector="openPanButtonPressed:" target="XfG-lQ-9wD" id="ZgO-Ly-bjh"/>
                                 </connections>
                             </button>
-                            <switch horizontalHuggingPriority="750" verticalHuggingPriority="750" baseWritingDirection="leftToRight" alignment="left" translatesAutoresizingMaskIntoConstraints="NO" id="q81-iw-BMs">
-                                <rect key="frame" x="18" y="74" width="42" height="24"/>
-                            </switch>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="4yc-go-SMv">
-                                <rect key="frame" x="64" y="79" width="95" height="16"/>
-                                <textFieldCell key="cell" lineBreakMode="clipping" title="Auto Open Pan" id="Nea-bk-lmu">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                                <accessibility description="Current Track" identifier="Current Track"/>
-                            </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="KQH-3p-B9R">
                                 <rect key="frame" x="18" y="20" width="126" height="16"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Accessibility Status:" id="AzH-Dw-wBX">
@@ -849,22 +837,28 @@
                                     <action selector="updateTimer:" target="XfG-lQ-9wD" id="9PD-Fx-uZ8"/>
                                 </connections>
                             </button>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9gG-IM-soe">
+                                <rect key="frame" x="18" y="80" width="113" height="18"/>
+                                <buttonCell key="cell" type="check" title="Auto Open Pan" bezelStyle="regularSquare" imagePosition="left" inset="2" id="GQy-yK-Z4w">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                            </button>
                         </subviews>
                         <constraints>
                             <constraint firstItem="bP8-a2-KEN" firstAttribute="top" secondItem="0nL-Dq-UAp" secondAttribute="bottom" constant="8" symbolic="YES" id="1Fp-9U-oc6"/>
                             <constraint firstItem="3fq-iP-LUy" firstAttribute="top" secondItem="Z5X-pI-3wG" secondAttribute="bottom" constant="8" symbolic="YES" id="1xW-Nv-U4H"/>
                             <constraint firstItem="MUo-5N-2mm" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="KQH-3p-B9R" secondAttribute="trailing" constant="8" symbolic="YES" id="3Yf-ib-iOK"/>
-                            <constraint firstAttribute="trailing" secondItem="4yc-go-SMv" secondAttribute="trailing" constant="393" id="3rU-Uv-cVF"/>
                             <constraint firstItem="bP8-a2-KEN" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="20" symbolic="YES" id="4hd-Nx-FJd"/>
                             <constraint firstItem="AJX-Dy-1o2" firstAttribute="leading" secondItem="tbO-oo-Bau" secondAttribute="trailing" constant="13" id="7Y9-5a-jX4"/>
                             <constraint firstItem="tKk-D2-JgC" firstAttribute="baseline" secondItem="0nL-Dq-UAp" secondAttribute="baseline" id="A8I-zo-ldf"/>
                             <constraint firstItem="AJX-Dy-1o2" firstAttribute="trailing" secondItem="YLb-qi-NCW" secondAttribute="trailing" id="EAI-ly-QPR"/>
+                            <constraint firstItem="9gG-IM-soe" firstAttribute="leading" secondItem="bP8-a2-KEN" secondAttribute="leading" id="EI8-eX-ww0"/>
                             <constraint firstItem="RlU-tg-6rb" firstAttribute="baseline" secondItem="3fq-iP-LUy" secondAttribute="baseline" id="I0p-Ur-v7H"/>
                             <constraint firstItem="tKk-D2-JgC" firstAttribute="trailing" secondItem="bP8-a2-KEN" secondAttribute="trailing" id="IAk-9K-XOT"/>
+                            <constraint firstItem="9gG-IM-soe" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="20" symbolic="YES" id="JN6-sz-Mxs"/>
                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="bP8-a2-KEN" secondAttribute="trailing" constant="20" symbolic="YES" id="Lq2-rK-v3L"/>
                             <constraint firstItem="Iba-RP-2JF" firstAttribute="leading" secondItem="Z5X-pI-3wG" secondAttribute="trailing" constant="1" id="MSS-rc-5Xq"/>
-                            <constraint firstItem="4yc-go-SMv" firstAttribute="top" secondItem="bP8-a2-KEN" secondAttribute="bottom" constant="13" id="MZf-ht-2NF"/>
-                            <constraint firstItem="q81-iw-BMs" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="20" symbolic="YES" id="Q8F-qB-5mG"/>
                             <constraint firstItem="tKk-D2-JgC" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="0nL-Dq-UAp" secondAttribute="trailing" constant="8" symbolic="YES" id="R5C-Vf-fu1"/>
                             <constraint firstItem="0nL-Dq-UAp" firstAttribute="top" secondItem="YLb-qi-NCW" secondAttribute="bottom" constant="8" symbolic="YES" id="SqN-um-YYr"/>
                             <constraint firstItem="0nL-Dq-UAp" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="20" symbolic="YES" id="Yyg-QY-vEf"/>
@@ -872,17 +866,17 @@
                             <constraint firstItem="KQH-3p-B9R" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="20" symbolic="YES" id="bFh-Pk-OMZ"/>
                             <constraint firstItem="tbO-oo-Bau" firstAttribute="leading" secondItem="RlU-tg-6rb" secondAttribute="trailing" constant="53" id="c4d-99-S1D"/>
                             <constraint firstItem="YLb-qi-NCW" firstAttribute="top" secondItem="3fq-iP-LUy" secondAttribute="bottom" constant="10" id="c52-a8-mEn"/>
-                            <constraint firstItem="q81-iw-BMs" firstAttribute="top" secondItem="bP8-a2-KEN" secondAttribute="bottom" constant="11" id="cll-gy-kuz"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="9gG-IM-soe" secondAttribute="trailing" constant="20" symbolic="YES" id="cBw-ve-kuB"/>
                             <constraint firstItem="Z5X-pI-3wG" firstAttribute="top" secondItem="wxx-Wh-iYE" secondAttribute="bottom" constant="8" symbolic="YES" id="drI-7q-hbg"/>
                             <constraint firstItem="wxx-Wh-iYE" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="20" symbolic="YES" id="dvX-t6-TzA"/>
                             <constraint firstItem="wxx-Wh-iYE" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="20" symbolic="YES" id="e22-3q-G2P"/>
                             <constraint firstAttribute="trailing" secondItem="AJX-Dy-1o2" secondAttribute="trailing" constant="20" symbolic="YES" id="ezI-4v-KZV"/>
                             <constraint firstItem="Z5X-pI-3wG" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="20" symbolic="YES" id="hFb-EJ-vrq"/>
-                            <constraint firstItem="4yc-go-SMv" firstAttribute="leading" secondItem="q81-iw-BMs" secondAttribute="trailing" constant="8" symbolic="YES" id="hLB-Ta-gYF"/>
                             <constraint firstItem="RlU-tg-6rb" firstAttribute="leading" secondItem="3fq-iP-LUy" secondAttribute="trailing" constant="3" id="hcZ-Qb-0NN"/>
                             <constraint firstItem="YLb-qi-NCW" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="20" symbolic="YES" id="iov-Fx-f2t"/>
                             <constraint firstItem="AJX-Dy-1o2" firstAttribute="top" secondItem="Iba-RP-2JF" secondAttribute="bottom" constant="7" id="mRA-14-Kkf"/>
                             <constraint firstItem="tbO-oo-Bau" firstAttribute="top" secondItem="Iba-RP-2JF" secondAttribute="bottom" constant="7" id="nb5-7b-7dj"/>
+                            <constraint firstItem="9gG-IM-soe" firstAttribute="top" secondItem="bP8-a2-KEN" secondAttribute="bottom" constant="12" id="qWZ-Ic-xi8"/>
                             <constraint firstAttribute="trailing" secondItem="YLb-qi-NCW" secondAttribute="trailing" constant="20" symbolic="YES" id="rZG-pa-aDc"/>
                             <constraint firstAttribute="bottom" secondItem="KQH-3p-B9R" secondAttribute="bottom" constant="20" symbolic="YES" id="sBK-uw-aqd"/>
                             <constraint firstItem="3fq-iP-LUy" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="20" symbolic="YES" id="vIC-Ki-i9s"/>
@@ -890,7 +884,7 @@
                     </view>
                     <connections>
                         <outlet property="accessibilityStatusLabel" destination="MUo-5N-2mm" id="VsL-qn-vp0"/>
-                        <outlet property="autoPanToggle" destination="q81-iw-BMs" id="DOa-d6-q7D"/>
+                        <outlet property="autoPanToggle" destination="9gG-IM-soe" id="TLV-kA-q8y"/>
                         <outlet property="cpuUsageLabel" destination="tKk-D2-JgC" id="H22-2N-h0W"/>
                         <outlet property="currentTrackLabel" destination="Iba-RP-2JF" id="0He-mI-kMf"/>
                         <outlet property="refreshRateLabel" destination="RlU-tg-6rb" id="k2k-8K-Ox2"/>
