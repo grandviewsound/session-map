@@ -251,8 +251,14 @@ class ViewController: NSViewController {
         if kr != KERN_SUCCESS {
             return -1
         }
-
-        var thread_list: thread_act_array_t? = UnsafeMutablePointer(mutating: [thread_act_t]())
+        // This threw a method so I used the below.  It doesn't seem to effect it though it is a different value
+        //var thread_list: thread_act_array_t? = UnsafeMutablePointer(mutating: [thread_act_t]())
+        //print(thread_list)
+        var bytes = [thread_act_t]()
+        var thread_list: thread_act_array_t? = UnsafeMutablePointer<UInt32>.allocate(capacity: bytes.count)
+        thread_list?.initialize(from: &bytes, count: bytes.count)
+        //print(thread_listx)
+        
         var thread_count: mach_msg_type_number_t = 0
         defer {
             if let thread_list = thread_list {
