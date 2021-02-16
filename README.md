@@ -1,4 +1,4 @@
-# session-map
+# Session Map
 
 ![image](https://i.imgur.com/tEgrNN7.png)
 
