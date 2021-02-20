@@ -7,18 +7,31 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		E3325E2E25D6C019004B8A39 /* ScriptBridge.applescript in Sources */ = {isa = PBXBuildFile; fileRef = E3325E2C25D6C019004B8A39 /* ScriptBridge.applescript */; };
-		E3325E2F25D6C019004B8A39 /* ScriptBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3325E2D25D6C019004B8A39 /* ScriptBridge.swift */; };
+		E347D6F425E16C1400FFD7E2 /* PFAssistive.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E347D6F325E16C1400FFD7E2 /* PFAssistive.framework */; };
+		E347D6F525E16C1400FFD7E2 /* PFAssistive.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E347D6F325E16C1400FFD7E2 /* PFAssistive.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E3694CD225D6331600790E7D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3694CD125D6331600790E7D /* AppDelegate.swift */; };
 		E3694CD425D6331600790E7D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3694CD325D6331600790E7D /* ViewController.swift */; };
 		E3694CD625D6331700790E7D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E3694CD525D6331700790E7D /* Assets.xcassets */; };
 		E3694CD925D6331700790E7D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E3694CD725D6331700790E7D /* Main.storyboard */; };
-		E39EF7F125D6D3D9007FB18E /* AppleScriptObjC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E39EF7F025D6D3D9007FB18E /* AppleScriptObjC.framework */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		E3D0EDA125E1554B0008B514 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				E347D6F525E16C1400FFD7E2 /* PFAssistive.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
-		E3325E2C25D6C019004B8A39 /* ScriptBridge.applescript */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.applescript; path = ScriptBridge.applescript; sourceTree = "<group>"; };
-		E3325E2D25D6C019004B8A39 /* ScriptBridge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScriptBridge.swift; sourceTree = "<group>"; };
+		E347D6F225E16B8800FFD7E2 /* Session Map-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Session Map-Bridging-Header.h"; sourceTree = "<group>"; };
+		E347D6F325E16C1400FFD7E2 /* PFAssistive.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PFAssistive.framework; path = "Session Map/PFAssistive.framework"; sourceTree = "<group>"; };
 		E3694CCE25D6331600790E7D /* Session Map.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Session Map.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E3694CD125D6331600790E7D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E3694CD325D6331600790E7D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -26,7 +39,6 @@
 		E3694CD825D6331700790E7D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E3694CDA25D6331700790E7D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E3694CDB25D6331700790E7D /* Session_Map.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Session_Map.entitlements; sourceTree = "<group>"; };
-		E39EF7F025D6D3D9007FB18E /* AppleScriptObjC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppleScriptObjC.framework; path = System/Library/Frameworks/AppleScriptObjC.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -34,7 +46,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E39EF7F125D6D3D9007FB18E /* AppleScriptObjC.framework in Frameworks */,
+				E347D6F425E16C1400FFD7E2 /* PFAssistive.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -63,12 +75,11 @@
 			children = (
 				E3694CD125D6331600790E7D /* AppDelegate.swift */,
 				E3694CD325D6331600790E7D /* ViewController.swift */,
-				E3325E2D25D6C019004B8A39 /* ScriptBridge.swift */,
-				E3325E2C25D6C019004B8A39 /* ScriptBridge.applescript */,
 				E3694CD525D6331700790E7D /* Assets.xcassets */,
 				E3694CD725D6331700790E7D /* Main.storyboard */,
-				E3694CDA25D6331700790E7D /* Info.plist */,
 				E3694CDB25D6331700790E7D /* Session_Map.entitlements */,
+				E3694CDA25D6331700790E7D /* Info.plist */,
+				E347D6F225E16B8800FFD7E2 /* Session Map-Bridging-Header.h */,
 			);
 			path = "Session Map";
 			sourceTree = "<group>";
@@ -76,7 +87,7 @@
 		E39EF7EF25D6D3D9007FB18E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				E39EF7F025D6D3D9007FB18E /* AppleScriptObjC.framework */,
+				E347D6F325E16C1400FFD7E2 /* PFAssistive.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -91,6 +102,7 @@
 				E3694CCA25D6331600790E7D /* Sources */,
 				E3694CCB25D6331600790E7D /* Frameworks */,
 				E3694CCC25D6331600790E7D /* Resources */,
+				E3D0EDA125E1554B0008B514 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -150,10 +162,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E3325E2E25D6C019004B8A39 /* ScriptBridge.applescript in Sources */,
 				E3694CD425D6331600790E7D /* ViewController.swift in Sources */,
 				E3694CD225D6331600790E7D /* AppDelegate.swift in Sources */,
-				E3325E2F25D6C019004B8A39 /* ScriptBridge.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -228,6 +238,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/$(PROJECT_NAME)/Session Map-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -282,6 +293,7 @@
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/$(PROJECT_NAME)/Session Map-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 			};
 			name = Release;
@@ -297,15 +309,20 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = W2887976EX;
 				ENABLE_HARDENED_RUNTIME = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Session\\ Map",
+				);
 				INFOPLIST_FILE = "Session Map/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MARKETING_VERSION = 0.1.1;
+				MARKETING_VERSION = 0.1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.kevinpeters.Session-Map";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
@@ -321,15 +338,20 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = W2887976EX;
 				ENABLE_HARDENED_RUNTIME = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Session\\ Map",
+				);
 				INFOPLIST_FILE = "Session Map/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MARKETING_VERSION = 0.1.1;
+				MARKETING_VERSION = 0.1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.kevinpeters.Session-Map";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;

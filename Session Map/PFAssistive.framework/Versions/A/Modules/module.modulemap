@@ -1,0 +1,6 @@
+framework module PFAssistive {
+  umbrella header "PFAssistive.h"
+
+  export *
+  module * { export * }
+}

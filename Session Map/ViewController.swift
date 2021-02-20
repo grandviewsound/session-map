@@ -6,7 +6,7 @@
 //
 
 import Cocoa
-import AppleScriptObjC
+import PFAssistive
 
 class ViewController: NSViewController {
 
@@ -27,9 +27,6 @@ class ViewController: NSViewController {
     var identifyCurrentTrackScript = ""
     var accessibilityEnabled = false
     
-    // AppleScriptObjC object for communicating with iTunes
-    var scriptBridge: ScriptBridge?
-    
     
     override func viewDidLoad() {
         
@@ -39,12 +36,6 @@ class ViewController: NSViewController {
         
         self.refreshRateSlider.doubleValue = self.refreshRate
         self.refreshRateLabel.stringValue = String(format: "%.2f", self.refreshRate)
-        
-        // AppleScriptObjC setup
-        //Bundle.main.loadAppleScriptObjectiveCScripts()
-        // create an instance of ScriptBridge script object for Swift code to use
-        //let scriptBridgeClass: AnyClass = NSClassFromString("ScriptBridge")!
-        //self.scriptBridge = scriptBridgeClass.alloc() as? ScriptBridge
         
         self.setupScripts()
         self.checkAccessibilityStatus()
