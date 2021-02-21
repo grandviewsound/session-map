@@ -8,7 +8,7 @@
 import Cocoa
 import PFAssistive
 
-class ViewController: NSViewController {
+class ViewController: NSViewController, PFObserverDelegate {
 
     @IBOutlet weak var currentTrackLabel: NSTextField!
     @IBOutlet weak var statusLabel: NSTextField!
@@ -27,6 +27,12 @@ class ViewController: NSViewController {
     var identifyCurrentTrackScript = ""
     var accessibilityEnabled = false
     
+    var proToolsObserver: PFObserver?
+    var proToolsApp: PFApplicationUIElement?
+    var editWindow: PFUIElement?
+    var trackList: PFUIElement?
+    var totalTracks = 0
+    
     
     override func viewDidLoad() {
         
@@ -37,14 +43,17 @@ class ViewController: NSViewController {
         self.refreshRateSlider.doubleValue = self.refreshRate
         self.refreshRateLabel.stringValue = String(format: "%.2f", self.refreshRate)
         
-        self.setupScripts()
+        //self.setupScripts()
         self.checkAccessibilityStatus()
         
-        self.setTimer(interval: self.refreshRate)
+        //self.setTimer(interval: self.refreshRate)
         
-        let cpuTimer = Timer(timeInterval: 4.0, target: self, selector: #selector(setCPULabel), userInfo: nil, repeats: true)
-        cpuTimer.tolerance = 1.0
-        RunLoop.current.add(cpuTimer, forMode: .common)
+        //let cpuTimer = Timer(timeInterval: 4.0, target: self, selector: #selector(setCPULabel), userInfo: nil, repeats: true)
+        //cpuTimer.tolerance = 1.0
+        //RunLoop.current.add(cpuTimer, forMode: .common)
+        
+        
+        self.checkProToolsStatus()
         
     }
 
@@ -54,6 +63,82 @@ class ViewController: NSViewController {
         }
     }
 
+    
+    func checkProToolsStatus() {
+        
+        if let app = PFApplicationUIElement.init(bundleIdentifier: "com.avid.ProTools", delegate: self) {
+            print("LOCKED ONTO TARGET")
+            self.proToolsApp = app
+            self.proToolsObserver = PFObserver.init(bundleIdentifier: "com.avid.ProTools")
+            self.proToolsObserver?.setDelegate(self)
+            //self.proToolsObserver?.register(forNotification: "AXUIElementDestroyed", from: self.proToolsApp, contextInfo: nil)
+            if let children = self.proToolsApp?.axChildren as [PFUIElement]? {
+                for child in children {
+                    if let title = child.axTitle as String? {
+                        if title.contains("Edit: ") {
+                            self.editWindow = child as PFUIElement
+                            //self.proToolsObserver?.register(forNotification: "AXWindowMiniaturized", from: self.editWindow, contextInfo: nil)
+                            if let children = self.editWindow?.axChildren as [PFUIElement]? {
+                                for child in children {
+                                    if let title = child.axTitle as String? {
+                                        if title.contains("Track List") {
+                                            self.trackList = child as PFUIElement
+                                            self.proToolsObserver?.register(forNotification: "AXRowCountChanged", from: self.trackList, contextInfo: nil)
+                                            self.getTrackCount()
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        } else {
+            print("Could not find Pro Tools app")
+        }
+    }
+    
+    func getTrackCount() {
+        var trackCount = 0
+        if let tracks = self.trackList?.axChildren as [PFUIElement]? {
+            for track in tracks {
+                if track.axRole == "AXRow" {
+                    trackCount += 1
+                    if let cells = track.axChildren as [PFUIElement]? {
+                        if let element = cells[1].axChildren as [PFUIElement]? {
+                            if let value = element[0].axTitle as String? {
+                                self.proToolsObserver?.register(forNotification: "AXTitleChanged", from: element[0], contextInfo: nil)
+                                if value.contains("Selected") {
+                                    self.currentTrackLabel.stringValue = value.replacingOccurrences(of: "Selected. ", with: "")
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            self.totalTracks = trackCount
+            //print("Track Count: \(self.totalTracks)")
+        }
+        
+        
+    }
+    
+    // Delegate Method for PFObserver
+    func application(withIdentifier identifier: String, atPath fullPath: String, didPostAccessibilityNotification notification: String, fromObservedUIElement observedUIElement: PFUIElement, forAffectedUIElement affectedUIElement: PFUIElement) {
+        //print("App Bundle ID: \(identifier)")
+        //print("Full Path: \(fullPath)")
+        //print("Notification: \(notification)")
+        //print("Observed Element: \(observedUIElement)")
+        //print("Affected Element: \(affectedUIElement)")
+        if let title = affectedUIElement.axTitle as String? {
+            if title == "Track List" {
+                self.trackList = affectedUIElement
+                self.getTrackCount()
+            }
+        }
+    }
+    
+    
     
     func setupScripts() {
         
@@ -190,13 +275,9 @@ class ViewController: NSViewController {
         }
     }
     
-    @objc func setCPULabel() {
-        self.cpuUsageLabel.stringValue = String(format: "%.2f", self.cpuUsage()) + "%"
-        self.checkAccessibilityStatus()
-    }
-    
     @IBAction func openPanButtonPressed(_ sender: Any) {
-        self.openPanWindow()
+        //self.openPanWindow()
+        self.checkAccessibilityStatus()
     }
     
 

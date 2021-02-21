@@ -793,7 +793,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tKk-D2-JgC">
-                                <rect key="frame" x="127" y="137" width="34" height="16"/>
+                                <rect key="frame" x="99" y="137" width="34" height="16"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="0.0%" id="U4o-uw-8Jj">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -801,8 +801,8 @@
                                 </textFieldCell>
                             </textField>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="bP8-a2-KEN">
-                                <rect key="frame" x="14" y="101" width="151" height="32"/>
-                                <buttonCell key="cell" type="push" title="Open Pan Window" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="hyv-Hm-CY7">
+                                <rect key="frame" x="14" y="101" width="123" height="32"/>
+                                <buttonCell key="cell" type="push" title="Check Status" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="hyv-Hm-CY7">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
