@@ -52,7 +52,6 @@ class ViewController: NSViewController, PFObserverDelegate {
         //cpuTimer.tolerance = 1.0
         //RunLoop.current.add(cpuTimer, forMode: .common)
         
-        
         self.checkProToolsStatus()
         
     }
@@ -67,7 +66,7 @@ class ViewController: NSViewController, PFObserverDelegate {
     func checkProToolsStatus() {
         
         if let app = PFApplicationUIElement.init(bundleIdentifier: "com.avid.ProTools", delegate: self) {
-            print("LOCKED ONTO TARGET")
+            //print("LOCKED ONTO TARGET")
             self.proToolsApp = app
             self.proToolsObserver = PFObserver.init(bundleIdentifier: "com.avid.ProTools")
             self.proToolsObserver?.setDelegate(self)
@@ -85,6 +84,17 @@ class ViewController: NSViewController, PFObserverDelegate {
                                             self.trackList = child as PFUIElement
                                             self.proToolsObserver?.register(forNotification: "AXRowCountChanged", from: self.trackList, contextInfo: nil)
                                             self.getTrackCount()
+                                        } else if title.contains("Counter Display Cluster") {
+                                            if let children = child.axChildren as [PFUIElement]? {
+                                                for child in children {
+                                                    if let title = child.axTitle as String? {
+                                                        if title.contains("Edit Selection Start") {
+                                                            let editStartCursor = child as PFUIElement
+                                                            self.proToolsObserver?.register(forNotification: "AXValueChanged", from: editStartCursor, contextInfo: nil)
+                                                        }
+                                                    }
+                                                }
+                                            }
                                         }
                                     }
                                 }
@@ -107,7 +117,7 @@ class ViewController: NSViewController, PFObserverDelegate {
                     if let cells = track.axChildren as [PFUIElement]? {
                         if let element = cells[1].axChildren as [PFUIElement]? {
                             if let value = element[0].axTitle as String? {
-                                self.proToolsObserver?.register(forNotification: "AXTitleChanged", from: element[0], contextInfo: nil)
+                                //self.proToolsObserver?.register(forNotification: "AXTitleChanged", from: element[0], contextInfo: nil)
                                 if value.contains("Selected") {
                                     self.currentTrackLabel.stringValue = value.replacingOccurrences(of: "Selected. ", with: "")
                                 }
@@ -119,9 +129,22 @@ class ViewController: NSViewController, PFObserverDelegate {
             self.totalTracks = trackCount
             //print("Track Count: \(self.totalTracks)")
         }
-        
-        
     }
+    
+    
+    @IBAction func resolveTracks(_ sender: Any) {
+        if let children = self.editWindow?.axChildren as [PFUIElement]? {
+            for child in children {
+                if let title = child.axTitle as String? {
+                    if title.contains("Track List") {
+                        self.trackList = child as PFUIElement
+                        self.getTrackCount()
+                    }
+                }
+            }
+        }
+    }
+    
     
     // Delegate Method for PFObserver
     func application(withIdentifier identifier: String, atPath fullPath: String, didPostAccessibilityNotification notification: String, fromObservedUIElement observedUIElement: PFUIElement, forAffectedUIElement affectedUIElement: PFUIElement) {
@@ -134,6 +157,9 @@ class ViewController: NSViewController, PFObserverDelegate {
             if title == "Track List" {
                 self.trackList = affectedUIElement
                 self.getTrackCount()
+            }
+            if title == "Edit Selection Start" {
+                self.resolveTracks(self)
             }
         }
     }

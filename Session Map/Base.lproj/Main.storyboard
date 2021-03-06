@@ -733,7 +733,7 @@
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wxx-Wh-iYE">
                                 <rect key="frame" x="18" y="234" width="47" height="16"/>
-                                <textFieldCell key="cell" lineBreakMode="clipping" title="Status:" id="ngv-Ty-Qfw">
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="Session:" id="ngv-Ty-Qfw">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -834,7 +834,7 @@
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
                                 <connections>
-                                    <action selector="updateTimer:" target="XfG-lQ-9wD" id="9PD-Fx-uZ8"/>
+                                    <action selector="resolveTracks:" target="XfG-lQ-9wD" id="Z2E-zh-zG4"/>
                                 </connections>
                             </button>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9gG-IM-soe">
