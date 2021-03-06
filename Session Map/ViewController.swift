@@ -40,9 +40,6 @@ class ViewController: NSViewController, PFObserverDelegate {
         
         self.currentTrackLabel.setAccessibilityTitle("Current Track")
         
-        self.refreshRateSlider.doubleValue = self.refreshRate
-        self.refreshRateLabel.stringValue = String(format: "%.2f", self.refreshRate)
-        
         //self.setupScripts()
         self.checkAccessibilityStatus()
         
@@ -76,6 +73,7 @@ class ViewController: NSViewController, PFObserverDelegate {
                     if let title = child.axTitle as String? {
                         if title.contains("Edit: ") {
                             self.editWindow = child as PFUIElement
+                            self.statusLabel.stringValue = title
                             //self.proToolsObserver?.register(forNotification: "AXWindowMiniaturized", from: self.editWindow, contextInfo: nil)
                             if let children = self.editWindow?.axChildren as [PFUIElement]? {
                                 for child in children {
@@ -108,6 +106,20 @@ class ViewController: NSViewController, PFObserverDelegate {
         }
     }
     
+    func identifyChild(element: PFUIElement?, containsString searchString: String) -> PFUIElement? {
+        if let children = element!.axChildren as [PFUIElement]? {
+            for child in children {
+                if let title = child.axTitle as String? {
+                    if title.contains(searchString) {
+                        let targetedElement = child as PFUIElement
+                        return targetedElement
+                    }
+                }
+            }
+        }
+        return nil
+    }
+    
     func getTrackCount() {
         var trackCount = 0
         if let tracks = self.trackList?.axChildren as [PFUIElement]? {
@@ -120,6 +132,10 @@ class ViewController: NSViewController, PFObserverDelegate {
                                 //self.proToolsObserver?.register(forNotification: "AXTitleChanged", from: element[0], contextInfo: nil)
                                 if value.contains("Selected") {
                                     self.currentTrackLabel.stringValue = value.replacingOccurrences(of: "Selected. ", with: "")
+                                    self.currentTrackTitle = value.replacingOccurrences(of: "Selected. ", with: "")
+                                    if self.autoPanToggle.state.rawValue == 1 {
+                                        self.openPanWindow()
+                                    }
                                 }
                             }
                         }
@@ -132,16 +148,12 @@ class ViewController: NSViewController, PFObserverDelegate {
     }
     
     
-    @IBAction func resolveTracks(_ sender: Any) {
-        if let children = self.editWindow?.axChildren as [PFUIElement]? {
-            for child in children {
-                if let title = child.axTitle as String? {
-                    if title.contains("Track List") {
-                        self.trackList = child as PFUIElement
-                        self.getTrackCount()
-                    }
-                }
-            }
+    func resolveTracks() {
+        if let element = self.identifyChild(element: self.editWindow, containsString: "Track List") {
+            self.trackList = element as PFUIElement
+            self.getTrackCount()
+        } else {
+            print("Could not find Track List")
         }
     }
     
@@ -156,10 +168,10 @@ class ViewController: NSViewController, PFObserverDelegate {
         if let title = affectedUIElement.axTitle as String? {
             if title == "Track List" {
                 self.trackList = affectedUIElement
-                self.getTrackCount()
+                //self.getTrackCount()
             }
             if title == "Edit Selection Start" {
-                self.resolveTracks(self)
+                self.resolveTracks()
             }
         }
     }
