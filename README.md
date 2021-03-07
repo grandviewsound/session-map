@@ -1,6 +1,6 @@
 # Session Map
 
-![Main Window](https://i.imgur.com/hEAzfPS.png)
+![Main Window](https://i.imgur.com/iCHDrFj.png)
 
 ### The Idea
 - A companion app for Pro Tools that fetches current UI status for various elements such as the currently selected track.  
