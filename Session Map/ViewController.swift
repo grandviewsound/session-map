@@ -10,13 +10,11 @@ import PFAssistive
 
 class ViewController: NSViewController, PFObserverDelegate {
 
+    @IBOutlet weak var editSessionLabel: NSTextField!
     @IBOutlet weak var currentTrackLabel: NSTextField!
-    @IBOutlet weak var statusLabel: NSTextField!
-    @IBOutlet weak var refreshRateLabel: NSTextField!
-    @IBOutlet weak var refreshRateSlider: NSSlider!
-    @IBOutlet weak var cpuUsageLabel: NSTextField!
     @IBOutlet weak var autoPanToggle: NSButton!
-    @IBOutlet weak var runLoopButton: NSButton!
+    @IBOutlet weak var autoInsertToggle: NSButton!
+    @IBOutlet weak var insertPopUpButton: NSPopUpButton!
     @IBOutlet weak var accessibilityStatusLabel: NSTextField!
     
     var currentTrackTitle = ""
@@ -26,6 +24,7 @@ class ViewController: NSViewController, PFObserverDelegate {
     var checkProToolsStatusScript = ""
     var identifyCurrentTrackScript = ""
     var accessibilityEnabled = false
+    var currentInsert = ""
     
     var proToolsObserver: PFObserver?
     var proToolsApp: PFApplicationUIElement?
@@ -39,6 +38,7 @@ class ViewController: NSViewController, PFObserverDelegate {
         super.viewDidLoad()
         
         self.currentTrackLabel.setAccessibilityTitle("Current Track")
+        self.currentInsert = self.insertPopUpButton.title
         
         //self.setupScripts()
         self.checkAccessibilityStatus()
@@ -59,45 +59,47 @@ class ViewController: NSViewController, PFObserverDelegate {
         }
     }
 
+    @IBAction func checkAccessibilityStatusButtonPressed(_ sender: Any) {
+        self.checkAccessibilityStatus()
+    }
+    
+    func checkAccessibilityStatus() {
+        let options: NSDictionary = [kAXTrustedCheckOptionPrompt.takeUnretainedValue() as String : true]
+        let accessEnabled = AXIsProcessTrustedWithOptions(options)
+        if !accessEnabled {
+            self.accessibilityStatusLabel.stringValue = "Access Not Enabled. Restart App"
+            self.accessibilityEnabled = false
+        } else {
+            self.accessibilityStatusLabel.stringValue = "Enabled"
+            self.accessibilityEnabled = true
+        }
+    }
     
     func checkProToolsStatus() {
-        
+        // Find Pro Tools app and set it as main observer object
         if let app = PFApplicationUIElement.init(bundleIdentifier: "com.avid.ProTools", delegate: self) {
             //print("LOCKED ONTO TARGET")
             self.proToolsApp = app
             self.proToolsObserver = PFObserver.init(bundleIdentifier: "com.avid.ProTools")
             self.proToolsObserver?.setDelegate(self)
             //self.proToolsObserver?.register(forNotification: "AXUIElementDestroyed", from: self.proToolsApp, contextInfo: nil)
-            if let children = self.proToolsApp?.axChildren as [PFUIElement]? {
-                for child in children {
-                    if let title = child.axTitle as String? {
-                        if title.contains("Edit: ") {
-                            self.editWindow = child as PFUIElement
-                            self.statusLabel.stringValue = title
-                            //self.proToolsObserver?.register(forNotification: "AXWindowMiniaturized", from: self.editWindow, contextInfo: nil)
-                            if let children = self.editWindow?.axChildren as [PFUIElement]? {
-                                for child in children {
-                                    if let title = child.axTitle as String? {
-                                        if title.contains("Track List") {
-                                            self.trackList = child as PFUIElement
-                                            self.proToolsObserver?.register(forNotification: "AXRowCountChanged", from: self.trackList, contextInfo: nil)
-                                            self.getTrackCount()
-                                        } else if title.contains("Counter Display Cluster") {
-                                            if let children = child.axChildren as [PFUIElement]? {
-                                                for child in children {
-                                                    if let title = child.axTitle as String? {
-                                                        if title.contains("Edit Selection Start") {
-                                                            let editStartCursor = child as PFUIElement
-                                                            self.proToolsObserver?.register(forNotification: "AXValueChanged", from: editStartCursor, contextInfo: nil)
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
+            // Get the current Edit Window Element
+            if let editWindowElement = self.identifyChildByTitle(element: self.proToolsApp, containsString: "Edit: ") {
+                self.editWindow = editWindowElement as PFUIElement
+                if let title = editWindowElement.axTitle as String? {
+                    let formattedString = title.replacingOccurrences(of: "Edit ", with: "")
+                    self.editSessionLabel.stringValue = formattedString
+                }
+                // Set an observer object to check when track list row count changes, and get current track selected
+                if let trackListElement = self.identifyChildByTitle(element: self.editWindow, containsString: "Track List") {
+                    self.trackList = trackListElement as PFUIElement
+                    self.proToolsObserver?.register(forNotification: "AXRowCountChanged", from: self.trackList, contextInfo: nil)
+                    self.getTrackCount()
+                }
+                // Set an observer object for the "Edit Selection Start" value change
+                if let counterDisplayElement = self.identifyChildByTitle(element: self.editWindow, containsString: "Counter Display Cluster") {
+                    if let editSelectionStartElement = self.identifyChildByTitle(element: counterDisplayElement, containsString: "Edit Selection Start") {
+                        self.proToolsObserver?.register(forNotification: "AXValueChanged", from: editSelectionStartElement, contextInfo: nil)
                     }
                 }
             }
@@ -106,7 +108,8 @@ class ViewController: NSViewController, PFObserverDelegate {
         }
     }
     
-    func identifyChild(element: PFUIElement?, containsString searchString: String) -> PFUIElement? {
+    // Utility function to find child by title
+    func identifyChildByTitle(element: PFUIElement?, containsString searchString: String) -> PFUIElement? {
         if let children = element!.axChildren as [PFUIElement]? {
             for child in children {
                 if let title = child.axTitle as String? {
@@ -131,10 +134,18 @@ class ViewController: NSViewController, PFObserverDelegate {
                             if let value = element[0].axTitle as String? {
                                 //self.proToolsObserver?.register(forNotification: "AXTitleChanged", from: element[0], contextInfo: nil)
                                 if value.contains("Selected") {
-                                    self.currentTrackLabel.stringValue = value.replacingOccurrences(of: "Selected. ", with: "")
-                                    self.currentTrackTitle = value.replacingOccurrences(of: "Selected. ", with: "")
-                                    if self.autoPanToggle.state.rawValue == 1 {
-                                        self.openPanWindow()
+                                    let formattedString = value.replacingOccurrences(of: "Selected. ", with: "")
+                                    if self.currentTrackTitle != formattedString {
+                                        self.currentTrackTitle = formattedString
+                                        DispatchQueue.main.async {
+                                            self.currentTrackLabel.stringValue = self.currentTrackTitle
+                                            if self.autoPanToggle.state.rawValue == 1 {
+                                                self.openPanWindow()
+                                            }
+                                            if self.autoInsertToggle.state.rawValue == 1 {
+                                                self.openInsertWindow()
+                                            }
+                                        }
                                     }
                                 }
                             }
@@ -148,8 +159,8 @@ class ViewController: NSViewController, PFObserverDelegate {
     }
     
     
-    func resolveTracks() {
-        if let element = self.identifyChild(element: self.editWindow, containsString: "Track List") {
+    func findSelectedTrack() {
+        if let element = self.identifyChildByTitle(element: self.editWindow, containsString: "Track List") {
             self.trackList = element as PFUIElement
             self.getTrackCount()
         } else {
@@ -171,155 +182,21 @@ class ViewController: NSViewController, PFObserverDelegate {
                 //self.getTrackCount()
             }
             if title == "Edit Selection Start" {
-                self.resolveTracks()
-            }
-        }
-    }
-    
-    
-    
-    func setupScripts() {
-        
-        self.checkProToolsStatusScript = """
-
-        tell application "System Events"
-            if exists (process "Pro Tools") then
-                tell process "Pro Tools"
-                    if exists (1st window whose title contains "Edit: ") then
-                        return "true"
-                    else
-                        return "false"
-                    end if
-                end tell
-            else
-                return "false"
-            end if
-        end tell
-
-        """
-        
-        self.identifyCurrentTrackScript = """
-
-        tell application "System Events"
-            tell process "Pro Tools"
-                --set frontmost to true
-                tell (1st window whose title contains "Edit: ")
-                    set selectedTrack to title of button of UI element 2 of (1st row of table "Track List" whose selected is true)
-                    set formattedString to text of selectedTrack as string
-                    set AppleScript's text item delimiters to "Selected. "
-                    set theTextItems to every text item of formattedString
-                    set AppleScript's text item delimiters to ""
-                    set formattedString to theTextItems as string
-                    return formattedString
-                end tell
-            end tell
-        end tell
-
-        """
-    }
-    
-    func checkAccessibilityStatus() {
-        let options: NSDictionary = [kAXTrustedCheckOptionPrompt.takeUnretainedValue() as String : true]
-        let accessEnabled = AXIsProcessTrustedWithOptions(options)
-        if !accessEnabled {
-            self.accessibilityStatusLabel.stringValue = "Access Not Enabled. Restart App"
-            self.accessibilityEnabled = false
-        } else {
-            self.accessibilityStatusLabel.stringValue = "Enabled"
-            self.accessibilityEnabled = true
-        }
-    }
-
-    func setTimer(interval: Double) {
-        self.runLoopTimer = Timer(timeInterval: interval, target: self, selector: #selector(backgroundLoop), userInfo: nil, repeats: true)
-        if let timer = self.runLoopTimer {
-            timer.tolerance = 0.3
-            RunLoop.current.add(timer, forMode: .common)
-        }
-    }
-    
-    @objc func backgroundLoop() {
-        
-        DispatchQueue.global(qos: .background).async {
-            
-            if self.accessibilityEnabled {
-                
-                var error: NSDictionary?
-                
-                // Checks if Pro Tools is running
-                if let scriptObject = NSAppleScript(source: self.checkProToolsStatusScript) {
-                    if let scriptResult = scriptObject.executeAndReturnError(&error).stringValue {
-                        //print(scriptResult)
-                        if scriptResult == "true" {
-                            self.proToolsStatus = true
-                            DispatchQueue.main.async {
-                                self.statusLabel.stringValue = "Scanning..."
-                            }
-                        } else {
-                            self.proToolsStatus = false
-                        }
-                    } else if (error != nil) {
-                        print("error: ", error!)
-                        self.proToolsStatus = false
-                    }
-                }
-                
-                if self.proToolsStatus == true {
-                    // Triggers Identify Current Track Script
-                    if let scriptObject = NSAppleScript(source: self.identifyCurrentTrackScript) {
-                        if let scriptResult = scriptObject.executeAndReturnError(&error).stringValue {
-                            //print(scriptResult)
-                            if scriptResult != self.currentTrackTitle {
-                                self.currentTrackTitle = scriptResult
-                                DispatchQueue.main.async {
-                                    self.currentTrackLabel.stringValue = self.currentTrackTitle
-                                    if self.autoPanToggle.state.rawValue == 1 {
-                                        self.openPanWindow()
-                                    }
-                                }
-                            }
-                        } else if (error != nil) {
-                            //print("error: ", error!)
-                        }
-                    }
-                } else {
-                    DispatchQueue.main.async {
-                        self.statusLabel.stringValue = "Pro Tools Edit Window Is Not Open"
-                    }
+                DispatchQueue.global(qos: .background).async {
+                    self.findSelectedTrack()
                 }
             }
         }
     }
-
     
-    @IBAction func refreshRateChanged(_ sender: Any) {
-        self.refreshRate = self.refreshRateSlider.doubleValue
-        self.refreshRateLabel.stringValue = String(format: "%.2f", self.refreshRate)
-    }
-    
-    @IBAction func updateTimer(_ sender: Any) {
-        if let timer = self.runLoopTimer {
-            timer.invalidate()
-            self.setTimer(interval: self.refreshRate)
-            self.runLoopButton.title = "Update Run Loop"
-        }
-    }
-    
-    @IBAction func stopTimer(_ sender: Any) {
-        if let timer = self.runLoopTimer {
-            timer.invalidate()
-            self.statusLabel.stringValue = "Stopped"
-            self.runLoopButton.title = "Start Run Loop"
-        }
-    }
     
     @IBAction func openPanButtonPressed(_ sender: Any) {
-        //self.openPanWindow()
-        self.checkAccessibilityStatus()
+        self.openPanWindow()
     }
     
 
     func openPanWindow() {
+        
         DispatchQueue.global(qos: .background).async {
             
             if self.accessibilityEnabled {
@@ -350,76 +227,169 @@ class ViewController: NSViewController, PFObserverDelegate {
         }
     }
     
-    fileprivate func cpuUsage() -> Double {
-        var kr: kern_return_t
-        var task_info_count: mach_msg_type_number_t
-
-        task_info_count = mach_msg_type_number_t(TASK_INFO_MAX)
-        var tinfo = [integer_t](repeating: 0, count: Int(task_info_count))
-
-        kr = task_info(mach_task_self_, task_flavor_t(TASK_BASIC_INFO), &tinfo, &task_info_count)
-        if kr != KERN_SUCCESS {
-            return -1
-        }
-        // This threw a method so I used the below.  It doesn't seem to effect it though it is a different value
-        //var thread_list: thread_act_array_t? = UnsafeMutablePointer(mutating: [thread_act_t]())
-        //print(thread_list)
-        var bytes = [thread_act_t]()
-        var thread_list: thread_act_array_t? = UnsafeMutablePointer<UInt32>.allocate(capacity: bytes.count)
-        thread_list?.initialize(from: &bytes, count: bytes.count)
-        //print(thread_listx)
+    @IBAction func openInsertButtonPressed(_ sender: Any) {
+        self.openInsertWindow()
+    }
+    
+    @IBAction func insertPopUpButtonPressed(_ sender: Any) {
+        self.currentInsert = self.insertPopUpButton.title
+    }
+    
+    func openInsertWindow() {
         
-        var thread_count: mach_msg_type_number_t = 0
-        defer {
-            if let thread_list = thread_list {
-                vm_deallocate(mach_task_self_, vm_address_t(UnsafePointer(thread_list).pointee), vm_size_t(thread_count))
+        DispatchQueue.global(qos: .background).async {
+            
+            if self.accessibilityEnabled {
+                
+                var error: NSDictionary?
+                
+                let script = """
+
+                tell application "System Events"
+                    tell process "Pro Tools"
+                        tell (1st window whose title contains "Edit: ")
+                            tell group "\(self.currentTrackTitle)"
+                                tell group "Inserts A-E"
+                                    if description of button "Insert Assignment \(self.currentInsert)" is not equal to "" then
+                                        click button "Insert Assignment \(self.currentInsert)"
+                                    end if
+                                end tell
+                            end tell
+                        end tell
+                    end tell
+                end tell
+
+                """
+                
+                // Checks if Pro Tools is running
+                if let scriptObject = NSAppleScript(source: script) {
+                    if let scriptResult = scriptObject.executeAndReturnError(&error).stringValue {
+                        print(scriptResult)
+                    } else if (error != nil) {
+                        print("error: ", error!)
+                    }
+                }
             }
         }
-
-        kr = task_threads(mach_task_self_, &thread_list, &thread_count)
-
-        if kr != KERN_SUCCESS {
-            return -1
-        }
-
-        var tot_cpu: Double = 0
-
-        if let thread_list = thread_list {
-
-            for j in 0 ..< Int(thread_count) {
-                var thread_info_count = mach_msg_type_number_t(THREAD_INFO_MAX)
-                var thinfo = [integer_t](repeating: 0, count: Int(thread_info_count))
-                kr = thread_info(thread_list[j], thread_flavor_t(THREAD_BASIC_INFO),
-                                 &thinfo, &thread_info_count)
-                if kr != KERN_SUCCESS {
-                    return -1
-                }
-
-                let threadBasicInfo = convertThreadInfoToThreadBasicInfo(thinfo)
-
-                if threadBasicInfo.flags != TH_FLAGS_IDLE {
-                    tot_cpu += (Double(threadBasicInfo.cpu_usage) / Double(TH_USAGE_SCALE)) * 100.0
-                }
-            } // for each thread
-        }
-
-        return tot_cpu
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+//    func setupScripts() {
+//
+//        self.checkProToolsStatusScript = """
+//
+//        tell application "System Events"
+//            if exists (process "Pro Tools") then
+//                tell process "Pro Tools"
+//                    if exists (1st window whose title contains "Edit: ") then
+//                        return "true"
+//                    else
+//                        return "false"
+//                    end if
+//                end tell
+//            else
+//                return "false"
+//            end if
+//        end tell
+//
+//        """
+//
+//        self.identifyCurrentTrackScript = """
+//
+//        tell application "System Events"
+//            tell process "Pro Tools"
+//                --set frontmost to true
+//                tell (1st window whose title contains "Edit: ")
+//                    set selectedTrack to title of button of UI element 2 of (1st row of table "Track List" whose selected is true)
+//                    set formattedString to text of selectedTrack as string
+//                    set AppleScript's text item delimiters to "Selected. "
+//                    set theTextItems to every text item of formattedString
+//                    set AppleScript's text item delimiters to ""
+//                    set formattedString to theTextItems as string
+//                    return formattedString
+//                end tell
+//            end tell
+//        end tell
+//
+//        """
+//    }
+//
+//
+//    func setTimer(interval: Double) {
+//        self.runLoopTimer = Timer(timeInterval: interval, target: self, selector: #selector(backgroundLoop), userInfo: nil, repeats: true)
+//        if let timer = self.runLoopTimer {
+//            timer.tolerance = 0.3
+//            RunLoop.current.add(timer, forMode: .common)
+//        }
+//    }
+//
+//
+//    @objc func backgroundLoop() {
+//
+//        DispatchQueue.global(qos: .background).async {
+//
+//            if self.accessibilityEnabled {
+//
+//                var error: NSDictionary?
+//
+//                // Checks if Pro Tools is running
+//                if let scriptObject = NSAppleScript(source: self.checkProToolsStatusScript) {
+//                    if let scriptResult = scriptObject.executeAndReturnError(&error).stringValue {
+//                        //print(scriptResult)
+//                        if scriptResult == "true" {
+//                            self.proToolsStatus = true
+//                            DispatchQueue.main.async {
+//                                //self.statusLabel.stringValue = "Scanning..."
+//                            }
+//                        } else {
+//                            self.proToolsStatus = false
+//                        }
+//                    } else if (error != nil) {
+//                        print("error: ", error!)
+//                        self.proToolsStatus = false
+//                    }
+//                }
+//
+//                if self.proToolsStatus == true {
+//                    // Triggers Identify Current Track Script
+//                    if let scriptObject = NSAppleScript(source: self.identifyCurrentTrackScript) {
+//                        if let scriptResult = scriptObject.executeAndReturnError(&error).stringValue {
+//                            //print(scriptResult)
+//                            if scriptResult != self.currentTrackTitle {
+//                                self.currentTrackTitle = scriptResult
+//                                DispatchQueue.main.async {
+//                                    self.currentTrackLabel.stringValue = self.currentTrackTitle
+//                                    if self.autoPanToggle.state.rawValue == 1 {
+//                                        self.openPanWindow()
+//                                    }
+//                                }
+//                            }
+//                        } else if (error != nil) {
+//                            //print("error: ", error!)
+//                        }
+//                    }
+//                } else {
+//                    DispatchQueue.main.async {
+//                        //self.statusLabel.stringValue = "Pro Tools Edit Window Is Not Open"
+//                    }
+//                }
+//            }
+//        }
+//    }
 
-    fileprivate func convertThreadInfoToThreadBasicInfo(_ threadInfo: [integer_t]) -> thread_basic_info {
-        var result = thread_basic_info()
+    
+    
+    
 
-        result.user_time = time_value_t(seconds: threadInfo[0], microseconds: threadInfo[1])
-        result.system_time = time_value_t(seconds: threadInfo[2], microseconds: threadInfo[3])
-        result.cpu_usage = threadInfo[4]
-        result.policy = threadInfo[5]
-        result.run_state = threadInfo[6]
-        result.flags = threadInfo[7]
-        result.suspend_count = threadInfo[8]
-        result.sleep_time = threadInfo[9]
-
-        return result
-    }
     
 }
 
