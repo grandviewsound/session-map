@@ -12,10 +12,14 @@
 - Button to open/close a specific insert of currently selected track, as well a toggle to auto-open the insert when the track selection changes
 
 ### Roadmap to v0.3
-- [ ] Add scriptability to app, so it can be directly addressed by applescript, instead of going through System Events
+- [ ] Fix icon vertical placement
+- [ ] Automatic disconnect and reconnect to Pro Tools when it opens and closes, or when edit window is closed/opened
+- [ ] Lock selection
 - [ ] Slots for tracks you'd like to save to directly address (mute, solo, inserts, sends, pan)
 - [ ] Plist support for basic persistence
+- [ ] Add scriptability to app, so it can be directly addressed by applescript, instead of going through System Events
 
+---
 ### Applescript Examples
 - Set the clipboard to the current track title 
 ```      
