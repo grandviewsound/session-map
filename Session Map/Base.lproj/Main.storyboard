@@ -793,7 +793,7 @@
                                 </connections>
                             </button>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="bTn-Ia-jMY">
-                                <rect key="frame" x="14" y="34" width="121" height="32"/>
+                                <rect key="frame" x="14" y="40" width="121" height="32"/>
                                 <buttonCell key="cell" type="push" title="Check Status" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="8Fv-YK-8h0">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -810,7 +810,7 @@
                                 </buttonCell>
                             </button>
                             <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AYs-Co-48A">
-                                <rect key="frame" x="270" y="138" width="48" height="25"/>
+                                <rect key="frame" x="267" y="136" width="48" height="25"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <popUpButtonCell key="cell" type="push" title="A" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="border" imageScaling="proportionallyDown" inset="2" selectedItem="FQw-vm-73w" id="v6E-gA-jfQ">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -829,6 +829,16 @@
                                     <action selector="insertPopUpButtonPressed:" target="XfG-lQ-9wD" id="U5V-Hw-tYG"/>
                                 </connections>
                             </popUpButton>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="HPI-eJ-0CI">
+                                <rect key="frame" x="14" y="73" width="183" height="32"/>
+                                <buttonCell key="cell" type="push" title="Reconnect To Pro Tools" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="PWn-v5-r9B">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="reconnectToProToolsPressed:" target="XfG-lQ-9wD" id="2zt-NF-KmT"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <constraints>
                             <constraint firstItem="qp6-9n-jCu" firstAttribute="leading" secondItem="bP8-a2-KEN" secondAttribute="leading" id="1ES-9e-bKZ"/>
@@ -841,7 +851,9 @@
                             <constraint firstItem="9gG-IM-soe" firstAttribute="top" secondItem="Z5X-pI-3wG" secondAttribute="bottom" constant="20" id="Kg6-eG-0gk"/>
                             <constraint firstItem="Iba-RP-2JF" firstAttribute="leading" secondItem="Z5X-pI-3wG" secondAttribute="trailing" constant="1" id="MSS-rc-5Xq"/>
                             <constraint firstItem="qp6-9n-jCu" firstAttribute="baseline" secondItem="ThF-YZ-W6K" secondAttribute="baseline" id="QHE-aB-zMx"/>
-                            <constraint firstItem="bTn-Ia-jMY" firstAttribute="top" secondItem="qp6-9n-jCu" secondAttribute="bottom" constant="79" id="QYc-Dd-jp1"/>
+                            <constraint firstItem="bTn-Ia-jMY" firstAttribute="top" secondItem="qp6-9n-jCu" secondAttribute="bottom" constant="73" id="QYc-Dd-jp1"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="HPI-eJ-0CI" secondAttribute="trailing" constant="20" symbolic="YES" id="RkI-Ms-b6j"/>
+                            <constraint firstItem="HPI-eJ-0CI" firstAttribute="leading" secondItem="bTn-Ia-jMY" secondAttribute="leading" id="UGH-NV-Snb"/>
                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="bTn-Ia-jMY" secondAttribute="trailing" constant="20" symbolic="YES" id="XLS-pg-qon"/>
                             <constraint firstItem="733-3s-GZ6" firstAttribute="leading" secondItem="wxx-Wh-iYE" secondAttribute="trailing" constant="8" symbolic="YES" id="ZH8-R9-Tjs"/>
                             <constraint firstItem="KQH-3p-B9R" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="20" symbolic="YES" id="bFh-Pk-OMZ"/>
@@ -849,6 +861,7 @@
                             <constraint firstItem="Z5X-pI-3wG" firstAttribute="top" secondItem="wxx-Wh-iYE" secondAttribute="bottom" constant="8" symbolic="YES" id="drI-7q-hbg"/>
                             <constraint firstItem="wxx-Wh-iYE" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="20" symbolic="YES" id="dvX-t6-TzA"/>
                             <constraint firstItem="wxx-Wh-iYE" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="20" symbolic="YES" id="e22-3q-G2P"/>
+                            <constraint firstItem="bTn-Ia-jMY" firstAttribute="top" secondItem="HPI-eJ-0CI" secondAttribute="bottom" constant="12" symbolic="YES" id="ffH-0J-ZLQ"/>
                             <constraint firstItem="Z5X-pI-3wG" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="20" symbolic="YES" id="hFb-EJ-vrq"/>
                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="ThF-YZ-W6K" secondAttribute="trailing" constant="20" symbolic="YES" id="k0L-Du-mXm"/>
                             <constraint firstItem="qp6-9n-jCu" firstAttribute="leading" secondItem="bTn-Ia-jMY" secondAttribute="leading" id="lJo-3i-g2F"/>

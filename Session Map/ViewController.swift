@@ -75,6 +75,11 @@ class ViewController: NSViewController, PFObserverDelegate {
         }
     }
     
+    
+    @IBAction func reconnectToProToolsPressed(_ sender: Any) {
+        self.checkProToolsStatus()
+    }
+    
     func checkProToolsStatus() {
         // Find Pro Tools app and set it as main observer object
         if let app = PFApplicationUIElement.init(bundleIdentifier: "com.avid.ProTools", delegate: self) {
@@ -87,7 +92,7 @@ class ViewController: NSViewController, PFObserverDelegate {
             if let editWindowElement = self.identifyChildByTitle(element: self.proToolsApp, containsString: "Edit: ") {
                 self.editWindow = editWindowElement as PFUIElement
                 if let title = editWindowElement.axTitle as String? {
-                    let formattedString = title.replacingOccurrences(of: "Edit ", with: "")
+                    let formattedString = title.replacingOccurrences(of: "Edit: ", with: "")
                     self.editSessionLabel.stringValue = formattedString
                 }
                 // Set an observer object to check when track list row count changes, and get current track selected
