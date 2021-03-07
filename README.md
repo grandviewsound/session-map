@@ -4,13 +4,12 @@
 
 ### The Idea
 - A companion app for Pro Tools that fetches current UI status for various elements such as the currently selected track.  
-- Designed to run background applescripts at a set interval so when user interaction is needed, the information is available has less of a delay in larger sessions.
+- Designed to run background observers on UI elements in Pro Tools.
 
 ### Current Features
-- Can determine which Pro Tools track is selected while sitting in the background using minimal CPU.  
-- Adjustable script timer to determine how often the background script gets called. 
-- Button for opening pan window of currently selected track
-- Switch to auto-open the pan which when the track selection changes.
+- Can determine which Pro Tools track is selected while sitting in the background using minimal CPU.
+- Button to open/close pan window of currently selected track, as well a toggle to auto-open the pan when the track selection changes
+- Button to open/close a specific insert of currently selected track, as well a toggle to auto-open the insert when the track selection changes
 
 ### Roadmap to v0.3
 - [ ] Add scriptability to app, so it can be directly addressed by applescript, instead of going through System Events
