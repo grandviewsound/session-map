@@ -12,7 +12,7 @@
 - Button for opening pan window of currently selected track
 - Switch to auto-open the pan which when the track selection changes.
 
-### Roadmap to v0.2
+### Roadmap to v0.3
 - [ ] Add scriptability to app, so it can be directly addressed by applescript, instead of going through System Events
 - [ ] Slots for tracks you'd like to save to directly address (mute, solo, inserts, sends, pan)
 - [ ] Plist support for basic persistence
