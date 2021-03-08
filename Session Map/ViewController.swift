@@ -15,10 +15,14 @@ class ViewController: NSViewController, PFObserverDelegate {
     @IBOutlet weak var autoPanToggle: NSButton!
     @IBOutlet weak var autoInsertToggle: NSButton!
     @IBOutlet weak var insertPopUpButton: NSPopUpButton!
+    @IBOutlet weak var lockSelectionToggle: NSButton!
     @IBOutlet weak var accessibilityStatusLabel: NSTextField!
     
     var currentTrackTitle = ""
     var proToolsStatus = false
+    var autoPanActivated = false
+    var autoInsertActivated = false
+    var selectionLocked = false
     var refreshRate = 1.0
     var runLoopTimer: Timer?
     var checkProToolsStatusScript = ""
@@ -76,7 +80,7 @@ class ViewController: NSViewController, PFObserverDelegate {
     }
     
     
-    @IBAction func reconnectToProToolsPressed(_ sender: Any) {
+    @IBAction func reconnectPTButtonTriggered(_ sender: Any) {
         self.checkProToolsStatus()
     }
     
@@ -110,6 +114,9 @@ class ViewController: NSViewController, PFObserverDelegate {
             }
         } else {
             print("Could not find Pro Tools app")
+            self.editSessionLabel.stringValue = "Could not find Pro Tools session"
+            self.currentTrackTitle = ""
+            self.currentTrackLabel.stringValue = self.currentTrackTitle
         }
     }
     
@@ -139,16 +146,19 @@ class ViewController: NSViewController, PFObserverDelegate {
                             if let value = element[0].axTitle as String? {
                                 //self.proToolsObserver?.register(forNotification: "AXTitleChanged", from: element[0], contextInfo: nil)
                                 if value.contains("Selected") {
-                                    let formattedString = value.replacingOccurrences(of: "Selected. ", with: "")
-                                    if self.currentTrackTitle != formattedString {
-                                        self.currentTrackTitle = formattedString
-                                        DispatchQueue.main.async {
-                                            self.currentTrackLabel.stringValue = self.currentTrackTitle
-                                            if self.autoPanToggle.state.rawValue == 1 {
-                                                self.openPanWindow()
+                                    if !selectionLocked {
+                                        let formattedString = value.replacingOccurrences(of: "Selected. ", with: "")
+                                        if self.currentTrackTitle != formattedString {
+                                            self.currentTrackTitle = formattedString
+                                            if self.autoPanActivated {
+                                                self.togglePanWindow()
                                             }
-                                            if self.autoInsertToggle.state.rawValue == 1 {
-                                                self.openInsertWindow()
+                                            if self.autoInsertActivated {
+                                                self.toggleInsertWindow()
+                                            }
+                                            DispatchQueue.main.async {
+                                                self.currentTrackLabel.stringValue = self.currentTrackTitle
+                                                
                                             }
                                         }
                                     }
@@ -195,12 +205,19 @@ class ViewController: NSViewController, PFObserverDelegate {
     }
     
     
-    @IBAction func openPanButtonPressed(_ sender: Any) {
-        self.openPanWindow()
+    @IBAction func panButtonTriggered(_ sender: Any) {
+        self.togglePanWindow()
     }
     
-
-    func openPanWindow() {
+    @IBAction func autoPanToggleTriggered(_ sender: Any) {
+        if self.autoPanToggle.state.rawValue == 1 {
+            self.autoPanActivated = true
+        } else {
+            self.autoPanActivated = false
+        }
+    }
+    
+    func togglePanWindow() {
         
         DispatchQueue.global(qos: .background).async {
             
@@ -231,16 +248,26 @@ class ViewController: NSViewController, PFObserverDelegate {
             }
         }
     }
+
     
-    @IBAction func openInsertButtonPressed(_ sender: Any) {
-        self.openInsertWindow()
+    @IBAction func insertToggleButtonTriggered(_ sender: Any) {
+        self.toggleInsertWindow()
     }
     
-    @IBAction func insertPopUpButtonPressed(_ sender: Any) {
+    @IBAction func autoInsertToggleTriggered(_ sender: Any) {
+        if self.autoInsertToggle.state.rawValue == 1 {
+            self.autoInsertActivated = true
+        } else {
+            self.autoInsertActivated = false
+        }
+    }
+    
+    @IBAction func insertPopUpMenuTriggered(_ sender: Any) {
         self.currentInsert = self.insertPopUpButton.title
     }
     
-    func openInsertWindow() {
+    
+    func toggleInsertWindow() {
         
         DispatchQueue.global(qos: .background).async {
             
@@ -279,6 +306,13 @@ class ViewController: NSViewController, PFObserverDelegate {
     }
     
     
+    @IBAction func lockSelectionToggleTriggered(_ sender: Any) {
+        if self.lockSelectionToggle.state.rawValue == 1 {
+            self.selectionLocked = true
+        } else {
+            self.selectionLocked = false
+        }
+    }
     
     
     
