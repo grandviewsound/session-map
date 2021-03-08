@@ -1,6 +1,6 @@
 # Session Map
 
-![Main Window](https://i.imgur.com/iCHDrFj.png)
+![Main Window](https://i.imgur.com/6ICrgAc.png)
 
 ### The Idea
 - A companion app for Pro Tools that fetches current UI status for various elements such as the currently selected track.  
@@ -12,9 +12,9 @@
 - Button to open/close a specific insert of currently selected track, as well a toggle to auto-open the insert when the track selection changes
 
 ### Roadmap to v0.3
-- [ ] Fix icon vertical placement
+- [x] Fix icon vertical placement
 - [ ] Automatic disconnect and reconnect to Pro Tools when it opens and closes, or when edit window is closed/opened
-- [ ] Lock selection
+- [x] Lock selection
 - [ ] Slots for tracks you'd like to save to directly address (mute, solo, inserts, sends, pan)
 - [ ] Plist support for basic persistence
 - [ ] Add scriptability to app, so it can be directly addressed by applescript, instead of going through System Events
