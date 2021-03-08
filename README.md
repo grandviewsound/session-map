@@ -13,8 +13,8 @@
 
 ### Roadmap to v0.3
 - [x] Fix icon vertical placement
+- [x] Lock track selection
 - [ ] Automatic disconnect and reconnect to Pro Tools when it opens and closes, or when edit window is closed/opened
-- [x] Lock selection
 - [ ] Slots for tracks you'd like to save to directly address (mute, solo, inserts, sends, pan)
 - [ ] Plist support for basic persistence
 - [ ] Add scriptability to app, so it can be directly addressed by applescript, instead of going through System Events
@@ -32,3 +32,21 @@ tell application "System Events"
 	end tell
 end tell
 ```
+
+---
+### Enabling Accessibility Access
+1. Upon first opening the app, you will be given a prompt to enable Accessibility Access so Session Map can read the UI of Pro Tools.
+
+![Initial Prompt](https://i.imgur.com/SZ8SvjM.png)
+
+2. Clicking "Open System Preferences" should bring you to System Preferences -> Security and Privacy -> Accessibility.  Unlock the settings with you administrator password and make sure Session Map is checked as seen below:
+
+![Settings](https://i.imgur.com/oZvnqCa.png)
+
+3. To confirm access is enabled, click the "Check Status" button in Session Map.  The status label will change to "Enabled" when everything is setup correctly
+
+![Enabled](https://i.imgur.com/u3r6HSp.png)
+
+4. The first time you click either of the toggle buttons or use the auto open functionality, you will receive another prompt.  Click OK to allow Session Map to trigger applescripts to open and close the pan and insert windows.  You can remove access by removing Session Map in System Preferences -> Security and Privacy -> Accessibility
+
+![Prompt-2](https://i.imgur.com/vDBumQr.png)
