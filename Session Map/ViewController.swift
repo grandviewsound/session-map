@@ -105,11 +105,14 @@ class ViewController: NSViewController, PFObserverDelegate {
                     self.proToolsObserver?.register(forNotification: "AXRowCountChanged", from: self.trackList, contextInfo: nil)
                     self.getTrackCount()
                 }
-                // Set an observer object for the "Edit Selection Start" value change
+                // Set an observer object for the "Cursor value" value change
                 if let counterDisplayElement = self.identifyChildByTitle(element: self.editWindow, containsString: "Counter Display Cluster") {
                     if let editSelectionStartElement = self.identifyChildByTitle(element: counterDisplayElement, containsString: "Edit Selection Start") {
                         self.proToolsObserver?.register(forNotification: "AXValueChanged", from: editSelectionStartElement, contextInfo: nil)
                     }
+                    //if let cursorLocationElement = self.identifyChildByTitle(element: counterDisplayElement, containsString: "Cursor value") {
+                        //self.proToolsObserver?.register(forNotification: "AXValueChanged", from: cursorLocationElement, contextInfo: nil)
+                    //}
                 }
             }
         } else {
@@ -191,17 +194,27 @@ class ViewController: NSViewController, PFObserverDelegate {
         //print("Notification: \(notification)")
         //print("Observed Element: \(observedUIElement)")
         //print("Affected Element: \(affectedUIElement)")
-        if let title = affectedUIElement.axTitle as String? {
-            if title == "Track List" {
-                self.trackList = affectedUIElement
-                //self.getTrackCount()
-            }
-            if title == "Edit Selection Start" {
-                DispatchQueue.global(qos: .background).async {
+        DispatchQueue.global(qos: .background).async {
+            if let title = affectedUIElement.axTitle as String? {
+                if title == "Track List" {
+                    self.trackList = affectedUIElement
+                    //self.getTrackCount()
+                }
+                if title == "Edit Selection Start" {
                     self.findSelectedTrack()
                 }
+//                if title == "Cursor value" {
+//                    if let value = affectedUIElement.axValue as! String? {
+//                        if value == ""{
+//                            print("so it's just an empty string")
+//                        }
+//                    } else {
+//                        print("turns out it's nil")
+//                    }
+//                }
             }
         }
+        
     }
     
     
